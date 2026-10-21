@@ -1,0 +1,173 @@
+/* =========================================================
+   SmartCampus - Professional Theme Layer
+   Loaded AFTER page styles; restyles without removing content
+   ========================================================= */
+:root{
+  --sc-primary:#4f46e5; --sc-primary-hover:#4338ca; --sc-accent:#06b6d4;
+  --sc-grad:linear-gradient(135deg,#4f46e5 0%,#7c3aed 55%,#06b6d4 130%);
+  --sc-radius:16px; --sc-radius-sm:10px;
+  --sc-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  --sc-shadow-lg:0 4px 6px rgba(15,23,42,.05),0 18px 40px rgba(79,70,229,.14);
+  --sc-font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sc-font)!important;-webkit-font-smoothing:antialiased;letter-spacing:-.005em;
+  background-image:radial-gradient(900px 400px at 100% -10%,rgba(79,70,229,.07),transparent 60%),
+                   radial-gradient(700px 380px at -10% 0%,rgba(6,182,212,.06),transparent 60%);
+  background-attachment:fixed}
+h1,h2,h3,h4,h5,h6{font-weight:700;letter-spacing:-.02em}
+::selection{background:rgba(79,70,229,.2)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#c7cbe0;border-radius:10px;border:2px solid transparent;background-clip:padding-box}
+body.sc-dark-mode ::-webkit-scrollbar-thumb{background:#334155;background-clip:padding-box;border:2px solid transparent}
+
+/* ---------- Navbar ---------- */
+.navbar,.sms-navbar{backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+  background:rgba(255,255,255,.82)!important;border-bottom:1px solid var(--sc-border)!important;box-shadow:0 1px 0 rgba(15,23,42,.03)!important}
+body.sc-dark-mode .navbar,body.sc-dark-mode .sms-navbar{background:rgba(17,24,39,.82)!important}
+.navbar-brand{font-weight:800!important;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--sc-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
+.navbar-brand i{-webkit-text-fill-color:initial;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:11px;
+  background:var(--sc-grad);color:#fff!important;font-size:1.05rem;box-shadow:0 6px 16px rgba(79,70,229,.35)}
+body.sc-dark-mode .navbar-brand{color:transparent!important}
+
+/* ---------- Side navigation (faculty / admin / student) ---------- */
+aside.bg-white,aside.border-end{background:var(--sc-surface)!important;border-right:1px solid var(--sc-border)!important}
+aside .nav-link,.sms-nav-link,.student-sidebar a{border-radius:12px!important;margin:2px 10px;padding:.65rem .9rem!important;font-weight:500;
+  color:var(--sc-muted);display:flex;align-items:center;gap:.65rem;transition:all .18s ease}
+aside .nav-link i,.student-sidebar a i{font-size:1.05rem;width:1.3rem;text-align:center;opacity:.9}
+aside .nav-link:hover,.student-sidebar a:hover{background:rgba(79,70,229,.08)!important;color:var(--sc-primary)!important;transform:translateX(3px)}
+aside .nav-link.active,.student-sidebar a.active{background:var(--sc-grad)!important;color:#fff!important;
+  box-shadow:0 8px 18px rgba(79,70,229,.32);font-weight:600}
+.student-sidebar{background:var(--sc-surface)!important;border-right:1px solid var(--sc-border)!important;box-shadow:var(--sc-shadow)}
+.student-brand-icon{background:var(--sc-grad)!important;color:#fff!important;border-radius:14px!important;box-shadow:0 8px 18px rgba(79,70,229,.35)}
+
+/* ---------- Cards ---------- */
+.card,.sc-card,.announcement-card,.student-card{border:1px solid var(--sc-border)!important;border-radius:var(--sc-radius)!important;
+  box-shadow:var(--sc-shadow)!important;background:var(--sc-surface);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:hover,.sc-card:hover,.announcement-card:hover,.student-card:hover{transform:translateY(-3px);box-shadow:var(--sc-shadow-lg)!important;border-color:rgba(79,70,229,.28)!important}
+form .card:hover,.table-responsive .card:hover,.modal-content:hover{transform:none}
+.card-header{background:transparent!important;border-bottom:1px solid var(--sc-border)!important;font-weight:600;padding:1rem 1.25rem}
+.card .display-6,.card .display-5,.card h3.fw-bold,.card h2.fw-bold{background:var(--sc-grad);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent}
+.stat-card{position:relative;overflow:hidden}
+.stat-card::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:var(--sc-grad);opacity:.09}
+
+/* ---------- Buttons ---------- */
+.btn{border-radius:12px!important;font-weight:600;letter-spacing:-.005em;padding:.55rem 1.05rem;transition:all .18s ease}
+.btn-sm{padding:.35rem .75rem;border-radius:10px!important}
+.btn-primary{background:var(--sc-grad)!important;border:0!important;box-shadow:0 6px 16px rgba(79,70,229,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(79,70,229,.38);filter:brightness(1.06)}
+.btn-primary:active{transform:translateY(0)}
+.btn-outline-primary{border-width:1.5px}
+.btn-outline-danger,.btn-danger{border-width:1.5px}
+.btn:focus-visible,.form-control:focus-visible,a:focus-visible{outline:3px solid rgba(79,70,229,.35);outline-offset:2px}
+.btn-close:focus{box-shadow:none}
+
+/* ---------- Forms ---------- */
+.form-control,.form-select{border-radius:12px!important;border:1.5px solid var(--sc-border);padding:.7rem .95rem;background-color:var(--sc-surface);
+  transition:border-color .18s ease,box-shadow .18s ease}
+.form-control:focus,.form-select:focus{border-color:var(--sc-primary)!important;box-shadow:0 0 0 4px rgba(79,70,229,.14)!important}
+.form-label{font-weight:600;font-size:.86rem;color:var(--sc-text);margin-bottom:.4rem}
+
+/* ---------- Tables ---------- */
+.table{--bs-table-bg:transparent;margin-bottom:0}
+.table thead th{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--sc-muted);font-weight:700;
+  background:var(--sc-surface-2)!important;border-bottom:1px solid var(--sc-border)!important;padding:.85rem 1rem;white-space:nowrap}
+.table td{padding:.9rem 1rem;vertical-align:middle;border-color:var(--sc-border)}
+.table-hover>tbody>tr{transition:background .15s ease}
+.table-hover>tbody>tr:hover>*{background:rgba(79,70,229,.05)!important}
+.table-responsive{border-radius:var(--sc-radius);border:1px solid var(--sc-border);background:var(--sc-surface)}
+.card .table-responsive{border:0}
+
+/* ---------- Badges & alerts ---------- */
+.badge{border-radius:999px!important;padding:.42em .8em;font-weight:600;letter-spacing:.01em}
+.alert{border:0!important;border-left:4px solid currentColor!important;border-radius:14px!important;box-shadow:var(--sc-shadow);font-weight:500}
+.alert-success{background:#ecfdf5!important;color:#047857!important}
+.alert-danger{background:#fef2f2!important;color:#b91c1c!important}
+.alert-warning{background:#fffbeb!important;color:#b45309!important}
+.alert-info{background:#ecfeff!important;color:#0e7490!important}
+body.sc-dark-mode .alert-success{background:rgba(16,185,129,.14)!important;color:#6ee7b7!important}
+body.sc-dark-mode .alert-danger{background:rgba(239,68,68,.14)!important;color:#fca5a5!important}
+body.sc-dark-mode .alert-warning{background:rgba(245,158,11,.14)!important;color:#fcd34d!important}
+body.sc-dark-mode .alert-info{background:rgba(6,182,212,.14)!important;color:#67e8f9!important}
+.progress{height:.7rem;border-radius:999px;background:var(--sc-surface-2)}
+.progress-bar{border-radius:999px;background:var(--sc-grad)}
+.modal-content{border-radius:20px!important;border:1px solid var(--sc-border)!important;box-shadow:0 30px 70px rgba(15,23,42,.25)}
+
+/* ---------- Page header / titles ---------- */
+main h2.fw-bold,.container h2.fw-bold,.page-header h2{position:relative}
+.page-icon{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:13px;margin-right:.7rem;
+  background:var(--sc-grad);color:#fff;font-size:1.2rem;vertical-align:middle;box-shadow:0 8px 18px rgba(79,70,229,.3)}
+
+/* ---------- Auth pages ---------- */
+.min-vh-100.d-flex.align-items-center{background:
+  radial-gradient(600px 400px at 15% 20%,rgba(124,58,237,.22),transparent 60%),
+  radial-gradient(600px 400px at 90% 90%,rgba(6,182,212,.22),transparent 60%)}
+.min-vh-100 .card{backdrop-filter:blur(10px);border-radius:24px!important;box-shadow:0 30px 70px rgba(79,70,229,.18)!important}
+.min-vh-100 .card:hover{transform:none}
+.min-vh-100 .display-6{width:72px;height:72px;margin:0 auto .8rem!important;display:grid!important;place-items:center;border-radius:22px;
+  background:var(--sc-grad);color:#fff!important;-webkit-text-fill-color:#fff!important;box-shadow:0 14px 30px rgba(79,70,229,.4);font-size:2rem!important}
+
+/* ---------- Landing page ---------- */
+.sms-hero{background:radial-gradient(800px 420px at 20% 0%,rgba(124,58,237,.16),transparent 60%),radial-gradient(700px 420px at 90% 30%,rgba(6,182,212,.16),transparent 60%)}
+.sms-brand-icon{background:var(--sc-grad)!important;color:#fff!important;box-shadow:0 8px 18px rgba(79,70,229,.35)}
+.sms-primary-action,.sms-login-btn,.sms-register-btn{background:var(--sc-grad)!important;color:#fff!important;border:0!important;
+  border-radius:12px!important;box-shadow:0 8px 20px rgba(79,70,229,.32);transition:all .18s ease}
+.sms-primary-action:hover,.sms-register-btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(79,70,229,.4)}
+.sms-badge{border-radius:999px!important}
+
+/* ---------- Footer ---------- */
+footer,.sms-footer{border-top:1px solid var(--sc-border)}
+
+/* ---------- Motion ---------- */
+@keyframes scFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+main>*,.container>*,.container-fluid>.row>[class*=col]>*{animation:scFadeUp .5s ease both}
+.row>[class*=col]:nth-child(2) .card{animation-delay:.05s}
+.row>[class*=col]:nth-child(3) .card{animation-delay:.1s}
+.row>[class*=col]:nth-child(4) .card{animation-delay:.15s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:768px){.card,.sc-card{border-radius:14px!important}.page-icon{width:38px;height:38px}}
+@media print{.navbar,aside,.sc-theme-toggle,.btn{display:none!important}body{background:#fff!important}}
+
+
+/* ---------- Form visibility / inputs ---------- */
+.form-control,
+.form-select,
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="tel"],
+input[type="search"]{
+  color:var(--sc-text)!important;
+  background-color:var(--sc-surface)!important;
+  border-color:var(--sc-border)!important;
+}
+.form-control::placeholder,
+textarea::placeholder,
+input::placeholder{color:var(--sc-muted)!important;opacity:1}
+.form-select option{color:#172033;background:#fff}
+body.sc-dark-mode .form-control,
+body.sc-dark-mode .form-select,
+body.sc-dark-mode textarea,
+body.sc-dark-mode input[type="text"],
+body.sc-dark-mode input[type="email"],
+body.sc-dark-mode input[type="password"],
+body.sc-dark-mode input[type="number"],
+body.sc-dark-mode input[type="date"],
+body.sc-dark-mode input[type="time"],
+body.sc-dark-mode input[type="tel"],
+body.sc-dark-mode input[type="search"]{
+  color:var(--sc-text)!important;
+  background-color:#0f172a!important;
+  border-color:#334155!important;
+  caret-color:#fff!important;
+}
+body.sc-dark-mode .form-select option{color:#f1f5f9;background:#0f172a}
+.form-control:disabled,
+.form-select:disabled,
+.form-control[readonly]{color:var(--sc-muted)!important;opacity:1}

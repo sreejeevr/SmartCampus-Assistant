@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartCampus - Student Management System</title>
+
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    >
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    color:#172033;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(126,93,255,0.18),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 90% 35%,
+            rgba(0,180,220,0.11),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f5f7ff,
+            #eef2ff 50%,
+            #f8faff
+        );
+
+    transition:0.35s ease;
+
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar{
+
+    width:100%;
+
+    height:78px;
+
+    display:flex;
+
+    align-items:center;
+
+    padding:0 24px;
+
+    border-bottom:1px solid rgba(0,0,0,0.08);
+
+    background:rgba(255,255,255,0.8);
+
+    backdrop-filter:blur(15px);
+
+}
+
+
+.navbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:28px;
+
+}
+
+
+/* =========================================================
+   THEME BUTTON
+========================================================= */
+
+.theme-toggle{
+
+    width:92px;
+
+    height:42px;
+
+    padding:4px;
+
+    display:flex;
+
+    align-items:center;
+
+    border-radius:30px;
+
+    border:1px solid #765cff;
+
+    background:#e7eaf5;
+
+    cursor:pointer;
+
+    outline:none;
+
+}
+
+
+.theme-icon{
+
+    width:34px;
+
+    height:34px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #7955ff,
+        #a477ff
+    );
+
+    font-size:17px;
+
+}
+
+
+.theme-moon{
+
+    width:34px;
+
+    margin-left:auto;
+
+    text-align:center;
+
+    font-size:17px;
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    text-decoration:none;
+
+    color:#172033;
+
+    font-size:22px;
+
+    font-weight:800;
+
+}
+
+
+.brand-icon{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:linear-gradient(
+        135deg,
+        #7040ff,
+        #3d8dff
+    );
+
+    font-size:23px;
+
+    box-shadow:
+        0 8px 25px rgba(80,60,255,0.3);
+
+}
+
+
+/* =========================================================
+   NAV BUTTONS
+========================================================= */
+
+.navbar-right{
+
+    margin-left:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.nav-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    padding:12px 21px;
+
+    border-radius:11px;
+
+    text-decoration:none;
+
+    color:#172033;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    border:1px solid rgba(0,0,0,0.08);
+
+    background:rgba(255,255,255,0.8);
+
+    transition:0.25s ease;
+
+}
+
+
+.nav-button:hover{
+
+    color:#172033;
+
+    transform:translateY(-2px);
+
+    border-color:#795cff;
+
+}
+
+
+.register-button{
+
+    border:none;
+
+    background:linear-gradient(
+        135deg,
+        #7040ff,
+        #438cff
+    );
+
+    color:white;
+
+}
+
+
+.register-button:hover{
+
+    color:white;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    flex:1;
+
+    min-height:calc(100vh - 148px);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:60px 20px 80px;
+
+}
+
+
+.hero-content{
+
+    width:100%;
+
+    max-width:920px;
+
+}
+
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 17px;
+
+    margin-bottom:25px;
+
+    border-radius:30px;
+
+    border:1px solid rgba(128,99,255,0.65);
+
+    background:rgba(77,51,170,0.13);
+
+    color:#5947b8;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.hero h1{
+
+    margin-bottom:25px;
+
+    font-size:clamp(
+        44px,
+        6vw,
+        76px
+    );
+
+    line-height:1.04;
+
+    letter-spacing:-3px;
+
+    font-weight:800;
+
+}
+
+
+.gradient-title{
+
+    background:linear-gradient(
+        90deg,
+        #6d5cff,
+        #a34fff
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+}
+
+
+.system-title{
+
+    color:#172033;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.description{
+
+    max-width:750px;
+
+    margin:auto;
+
+    color:#5d687d;
+
+    font-size:18px;
+
+    line-height:1.75;
+
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-buttons{
+
+    margin-top:34px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.hero-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:9px;
+
+    padding:15px 25px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    transition:0.25s ease;
+
+}
+
+
+.hero-button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+.primary-button{
+
+    color:white;
+
+    background:linear-gradient(
+        135deg,
+        #7040ff,
+        #438cff
+    );
+
+    box-shadow:
+        0 12px 30px rgba(83,62,255,0.30);
+
+}
+
+
+.primary-button:hover{
+
+    color:white;
+
+}
+
+
+.secondary-button{
+
+    color:#172033;
+
+    border:1px solid #765cff;
+
+    background:rgba(255,255,255,0.65);
+
+}
+
+
+.secondary-button:hover{
+
+    color:#172033;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    width:100%;
+
+    height:70px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    border-top:1px solid rgba(0,0,0,0.08);
+
+    background:rgba(255,255,255,0.8);
+
+    color:#697386;
+
+    font-size:14px;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .navbar{
+
+        height:auto;
+
+        padding:14px 16px;
+
+        flex-wrap:wrap;
+
+        gap:15px;
+
+    }
+
+
+    .navbar-left{
+
+        width:100%;
+
+        justify-content:space-between;
+
+        gap:12px;
+
+    }
+
+
+    .brand{
+
+        font-size:19px;
+
+    }
+
+
+    .brand-icon{
+
+        width:42px;
+
+        height:42px;
+
+    }
+
+
+    .navbar-right{
+
+        width:100%;
+
+        margin-left:0;
+
+        justify-content:center;
+
+    }
+
+
+    .nav-button{
+
+        flex:1;
+
+    }
+
+
+    .hero{
+
+        min-height:calc(100vh - 190px);
+
+        padding:50px 20px 60px;
+
+    }
+
+
+    .hero h1{
+
+        font-size:45px;
+
+        letter-spacing:-2px;
+
+    }
+
+
+    .description{
+
+        font-size:16px;
+
+    }
+
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+    }
+
+
+    .hero-button{
+
+        width:100%;
+
+        max-width:330px;
+
+    }
+
+
+    .footer{
+
+        height:65px;
+
+        padding:0 15px;
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body class="light-mode">
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+
+    <div class="navbar-left">
+
+
+        <!-- THEME BUTTON -->
+
+        <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle light and dark mode"
+        >
+
+            <span
+                class="theme-icon"
+                id="themeIcon"
+            >
+                🌙
+            </span>
+
+
+            <span class="theme-moon">
+                🌙
+            </span>
+
+        </button>
+
+
+
+        <!-- SMARTCAMPUS -->
+
+        <a
+            href="{{ url_for('index') }}"
+            class="brand"
+        >
+
+            <span class="brand-icon">
+                🎓
+            </span>
+
+
+            <span>
+                SmartCampus
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- LOGIN / REGISTER -->
+
+    <div class="navbar-right">
+
+
+        <a
+            href="{{ url_for('login') }}"
+            class="nav-button"
+        >
+
+            <i class="bi bi-box-arrow-in-right"></i>
+
+            Login
+
+        </a>
+
+
+        <a
+            href="{{ url_for('register') }}"
+            class="nav-button register-button"
+        >
+
+            <i class="bi bi-person-plus"></i>
+
+            Register
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main class="hero">
+
+
+    <div class="hero-content">
+
+
+        <!-- BADGE -->
+
+        <div class="badge">
+
+            <i class="bi bi-mortarboard-fill"></i>
+
+            Academic Management Platform
+
+        </div>
+
+
+
+        <!-- TITLE -->
+
+        <h1>
+
+            <span class="gradient-title">
+
+                Student Management
+
+            </span>
+
+            <br>
+
+            <span class="system-title">
+
+                System
+
+            </span>
+
+        </h1>
+
+
+
+        <!-- DESCRIPTION -->
+
+        <p class="description">
+
+            SmartCampus provides a centralized platform
+            to manage students, attendance, assignments,
+            timetable and important academic announcements
+            from one place.
+
+        </p>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="hero-buttons">
+
+
+            <!-- LOGIN -->
+
+            <a
+                href="{{ url_for('login') }}"
+                class="hero-button primary-button"
+            >
+
+                <i class="bi bi-box-arrow-in-right"></i>
+
+                Login to SmartCampus
+
+            </a>
+
+
+
+            <!-- REGISTER -->
+
+            <a
+                href="{{ url_for('register') }}"
+                class="hero-button secondary-button"
+            >
+
+                <i class="bi bi-person-plus"></i>
+
+                Create Account
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    © 2026 SmartCampus - Student Management System
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+const themeToggle =
+    document.getElementById("themeToggle");
+
+
+const themeIcon =
+    document.getElementById("themeIcon");
+
+
+/*
+=========================================================
+INDEX PAGE IS LIGHT BY DEFAULT
+=========================================================
+*/
+
+document.body.classList.add("light-mode");
+
+themeIcon.textContent = "🌙";
+
+
+/*
+=========================================================
+THEME SWITCH
+=========================================================
+*/
+
+themeToggle.addEventListener(
+    "click",
+    function(){
+
+        document.body.classList.toggle(
+            "light-mode"
+        );
+
+
+        const lightMode =
+            document.body.classList.contains(
+                "light-mode"
+            );
+
+
+        if(lightMode){
+
+            themeIcon.textContent = "🌙";
+
+            localStorage.setItem(
+                "smartCampusTheme",
+                "light"
+            );
+
+        }
+
+        else{
+
+            themeIcon.textContent = "☀️";
+
+            localStorage.setItem(
+                "smartCampusTheme",
+                "dark"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

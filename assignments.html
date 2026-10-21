@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assignments - SmartCampus</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Theme CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/theme.css') }}">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Favicon -->
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="{{ url_for('static', filename='icon.svg') }}">
+
+    <link
+        rel="manifest"
+        href="{{ url_for('static', filename='manifest.json') }}">
+
+    <meta
+        name="theme-color"
+        content="#4f46e5">
+
+
+    <style>
+
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
+
+        :root {
+            --sc-bg: #f6f8fc;
+            --sc-surface: #ffffff;
+            --sc-surface-2: #f8fafc;
+            --sc-text: #172033;
+            --sc-muted: #64748b;
+            --sc-border: #e2e8f0;
+            --sc-primary: #4f46e5;
+        }
+
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", Arial, sans-serif;
+            background: var(--sc-bg) !important;
+            color: var(--sc-text);
+            transition:
+                background-color .2s ease,
+                color .2s ease;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            background: var(--sc-surface) !important;
+            border-bottom: 1px solid var(--sc-border);
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .sc-theme-toggle {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+
+            border: 1px solid var(--sc-border);
+            border-radius: 11px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--sc-surface);
+            color: var(--sc-text);
+
+            cursor: pointer;
+            padding: 0;
+
+            font-size: 18px;
+
+            transition: .2s ease;
+        }
+
+        .sc-theme-toggle:hover {
+            background: var(--sc-primary);
+            border-color: var(--sc-primary);
+            color: #ffffff;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
+
+        body.sc-dark-mode {
+            --sc-bg: #0b1120;
+            --sc-surface: #111827;
+            --sc-surface-2: #172033;
+            --sc-text: #f1f5f9;
+            --sc-muted: #a8b3c5;
+            --sc-border: #293548;
+            --sc-primary: #818cf8;
+
+            background: var(--sc-bg) !important;
+            color: var(--sc-text) !important;
+        }
+
+        body.sc-dark-mode .bg-white,
+        body.sc-dark-mode .bg-light {
+            background: var(--sc-surface) !important;
+        }
+
+        body.sc-dark-mode .text-muted {
+            color: var(--sc-muted) !important;
+        }
+
+        body.sc-dark-mode h1,
+        body.sc-dark-mode h2,
+        body.sc-dark-mode h3,
+        body.sc-dark-mode h4,
+        body.sc-dark-mode h5,
+        body.sc-dark-mode h6 {
+            color: var(--sc-text) !important;
+        }
+
+        body.sc-dark-mode .fw-bold,
+        body.sc-dark-mode .fw-semibold {
+            color: var(--sc-text) !important;
+        }
+
+        body.sc-dark-mode .navbar {
+            background: var(--sc-surface) !important;
+            border-color: var(--sc-border) !important;
+        }
+
+        body.sc-dark-mode .navbar-brand {
+            color: #a5b4fc !important;
+        }
+
+        body.sc-dark-mode .nav-link {
+            color: var(--sc-text) !important;
+        }
+
+        body.sc-dark-mode .card {
+            background: var(--sc-surface) !important;
+            color: var(--sc-text) !important;
+            border-color: var(--sc-border) !important;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sms-sidebar {
+            background: var(--sc-surface);
+            border-color: var(--sc-border);
+        }
+
+        .sms-sidebar .nav-link {
+            color: var(--sc-muted);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-weight: 500;
+        }
+
+        .sms-sidebar .nav-link:hover {
+            color: var(--sc-primary);
+            background: rgba(79,70,229,.08);
+        }
+
+        .sms-sidebar .nav-link.active {
+            color: #ffffff;
+            background: linear-gradient(
+                135deg,
+                #7040ff,
+                #438cff
+            );
+        }
+
+        body.sc-dark-mode .sms-sidebar {
+            background: var(--sc-surface);
+            border-color: var(--sc-border);
+        }
+
+        body.sc-dark-mode .sms-sidebar .nav-link {
+            color: var(--sc-muted);
+        }
+
+        body.sc-dark-mode .sms-sidebar .nav-link:hover {
+            color: #a5b4fc;
+            background: #172033;
+        }
+
+        body.sc-dark-mode .sms-sidebar .nav-link.active {
+            color: #ffffff;
+            background: #172033;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h2 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: var(--sc-muted);
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+        ===================================================== */
+
+        .summary-card {
+            border: 0;
+            border-radius: 14px;
+            overflow: hidden;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(15,23,42,.10) !important;
+        }
+
+        .summary-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+        .upcoming-icon {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .today-icon {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .overdue-icon {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        body.sc-dark-mode .upcoming-icon {
+            background: #172554;
+            color: #93c5fd;
+        }
+
+        body.sc-dark-mode .today-icon {
+            background: #422006;
+            color: #fbbf24;
+        }
+
+        body.sc-dark-mode .overdue-icon {
+            background: #450a0a;
+            color: #fca5a5;
+        }
+
+
+        /* =====================================================
+           ASSIGNMENT CARD
+
+           NO RED/BROWN BORDER
+        ===================================================== */
+
+        .assignment-item {
+            transition: transform .2s ease;
+        }
+
+        .assignment-card {
+            border: 0 !important;
+            border-radius: 14px;
+            overflow: hidden;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(15,23,42,.10) !important;
+        }
+
+
+        /* =====================================================
+           STATUS BADGES
+        ===================================================== */
+
+        .assignment-status {
+            font-size: 10px;
+            font-weight: 800;
+
+            padding: 6px 9px;
+
+            border-radius: 6px;
+
+            white-space: nowrap;
+        }
+
+        .status-upcoming {
+            background: #dbeafe !important;
+            color: #1d4ed8 !important;
+        }
+
+        .status-today {
+            background: #fef3c7 !important;
+            color: #92400e !important;
+        }
+
+        .status-overdue {
+            background: #fee2e2 !important;
+            color: #b91c1c !important;
+        }
+
+        .status-none {
+            background: #e2e8f0 !important;
+            color: #475569 !important;
+        }
+
+        body.sc-dark-mode .status-upcoming {
+            background: #172554 !important;
+            color: #93c5fd !important;
+        }
+
+        body.sc-dark-mode .status-today {
+            background: #422006 !important;
+            color: #fbbf24 !important;
+        }
+
+        body.sc-dark-mode .status-overdue {
+            background: #450a0a !important;
+            color: #fca5a5 !important;
+        }
+
+        body.sc-dark-mode .status-none {
+            background: #334155 !important;
+            color: #cbd5e1 !important;
+        }
+
+
+        /* =====================================================
+           DEADLINE TEXT
+        ===================================================== */
+
+        .deadline-text {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .deadline-value {
+            font-weight: 600;
+        }
+
+        .deadline-overdue {
+            color: #dc2626 !important;
+            font-weight: 800;
+        }
+
+        .deadline-today {
+            color: #d97706 !important;
+            font-weight: 800;
+        }
+
+        .deadline-upcoming {
+            color: #2563eb !important;
+            font-weight: 700;
+        }
+
+        body.sc-dark-mode .deadline-overdue {
+            color: #fca5a5 !important;
+        }
+
+        body.sc-dark-mode .deadline-today {
+            color: #fbbf24 !important;
+        }
+
+        body.sc-dark-mode .deadline-upcoming {
+            color: #93c5fd !important;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+            padding: 60px 20px;
+            text-align: center;
+            color: var(--sc-muted);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            opacity: .5;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .sms-footer {
+            text-align: center;
+            padding: 22px;
+            margin-top: 30px;
+
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 992px) {
+
+            .sms-sidebar {
+                min-height: auto !important;
+
+                border-right: 0 !important;
+
+                border-bottom:
+                    1px solid var(--sc-border);
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .page-header h2 {
+                font-size: 24px;
+            }
+
+            .assignment-status {
+                font-size: 9px;
+                padding: 5px 7px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav
+    class="navbar bg-white shadow-sm border-bottom sticky-top">
+
+    <div
+        class="container-fluid px-3 px-md-4">
+
+        <a
+            class="navbar-brand fw-bold text-primary"
+            href="{{ url_for('student_dashboard') }}">
+
+            <i
+                class="bi bi-mortarboard-fill me-2">
+            </i>
+
+            SmartCampus
+
+        </a>
+
+
+        <div
+            class="d-flex align-items-center gap-2">
+
+            <span
+                class="d-none d-md-inline fw-semibold">
+
+                {{ session.get('name','Student') }}
+
+            </span>
+
+
+            <span
+                class="badge bg-primary">
+
+                Student
+
+            </span>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="btn btn-outline-danger btn-sm">
+
+                <i
+                    class="bi bi-box-arrow-right">
+                </i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<div
+    class="container-fluid">
+
+    <div
+        class="row">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="col-lg-2 p-0 border-end min-vh-100 sms-sidebar">
+
+            <div
+                class="p-3">
+
+                <div
+                    class="small text-muted text-uppercase fw-bold mb-2">
+
+                    Student Portal
+
+                </div>
+
+
+                <nav
+                    class="nav nav-pills flex-column gap-1">
+
+
+                    <a
+                        class="nav-link
+                        {% if request.endpoint=='student_dashboard' %}
+                        active
+                        {% endif %}"
+                        href="{{ url_for('student_dashboard') }}">
+
+                        <i
+                            class="bi bi-grid me-2">
+                        </i>
+
+                        Dashboard
+
+                    </a>
+
+
+                    <a
+                        class="nav-link
+                        {% if request.endpoint=='student_profile' %}
+                        active
+                        {% endif %}"
+                        href="{{ url_for('student_profile') }}">
+
+                        <i
+                            class="bi bi-person me-2">
+                        </i>
+
+                        Profile
+
+                    </a>
+
+
+                    <a
+                        class="nav-link
+                        {% if request.endpoint=='student_attendance' %}
+                        active
+                        {% endif %}"
+                        href="{{ url_for('student_attendance') }}">
+
+                        <i
+                            class="bi bi-calendar-check me-2">
+                        </i>
+
+                        Attendance
+
+                    </a>
+
+
+                    <a
+                        class="nav-link
+                        {% if request.endpoint=='student_timetable' %}
+                        active
+                        {% endif %}"
+                        href="{{ url_for('student_timetable') }}">
+
+                        <i
+                            class="bi bi-calendar3 me-2">
+                        </i>
+
+                        Timetable
+
+                    </a>
+
+
+                    <a
+                        class="nav-link
+                        {% if request.endpoint=='student_assignments' %}
+                        active
+                        {% endif %}"
+                        href="{{ url_for('student_assignments') }}">
+
+                        <i
+                            class="bi bi-journal-text me-2">
+                        </i>
+
+                        Assignments
+
+                    </a>
+
+
+                    <a
+                        class="nav-link
+                        {% if request.endpoint=='student_announcements' %}
+                        active
+                        {% endif %}"
+                        href="{{ url_for('student_announcements') }}">
+
+                        <i
+                            class="bi bi-megaphone me-2">
+                        </i>
+
+                        Announcements
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <main
+            class="col-lg-10 p-3 p-md-4">
+
+
+            <!-- HEADER -->
+
+            <div
+                class="page-header">
+
+                <h2>
+                    Assignments
+                </h2>
+
+                <p>
+                    Assignments and questions by subject.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SUMMARY
+            ================================================== -->
+
+            <div
+                class="row g-3 mb-4">
+
+
+                <!-- UPCOMING -->
+
+                <div
+                    class="col-md-4">
+
+                    <div
+                        class="card summary-card border-0 shadow-sm h-100">
+
+                        <div
+                            class="card-body">
+
+                            <div
+                                class="d-flex align-items-center gap-3">
+
+                                <div
+                                    class="summary-icon upcoming-icon">
+
+                                    <i
+                                        class="bi bi-calendar-event">
+                                    </i>
+
+                                </div>
+
+                                <div>
+
+                                    <div
+                                        class="text-muted small">
+
+                                        Upcoming
+
+                                    </div>
+
+                                    <div
+                                        class="fw-bold fs-4"
+                                        id="upcomingCount">
+
+                                        0
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TODAY -->
+
+                <div
+                    class="col-md-4">
+
+                    <div
+                        class="card summary-card border-0 shadow-sm h-100">
+
+                        <div
+                            class="card-body">
+
+                            <div
+                                class="d-flex align-items-center gap-3">
+
+                                <div
+                                    class="summary-icon today-icon">
+
+                                    <i
+                                        class="bi bi-clock">
+                                    </i>
+
+                                </div>
+
+                                <div>
+
+                                    <div
+                                        class="text-muted small">
+
+                                        Due Today
+
+                                    </div>
+
+                                    <div
+                                        class="fw-bold fs-4"
+                                        id="todayCount">
+
+                                        0
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OVERDUE -->
+
+                <div
+                    class="col-md-4">
+
+                    <div
+                        class="card summary-card border-0 shadow-sm h-100">
+
+                        <div
+                            class="card-body">
+
+                            <div
+                                class="d-flex align-items-center gap-3">
+
+                                <div
+                                    class="summary-icon overdue-icon">
+
+                                    <i
+                                        class="bi bi-exclamation-circle">
+                                    </i>
+
+                                </div>
+
+                                <div>
+
+                                    <div
+                                        class="text-muted small">
+
+                                        Overdue
+
+                                    </div>
+
+                                    <div
+                                        class="fw-bold fs-4"
+                                        id="overdueCount">
+
+                                        0
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FILTER BUTTONS
+            ================================================== -->
+
+            <div
+                class="d-flex flex-wrap gap-2 mb-4">
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-primary filter-btn"
+                    data-filter="all">
+
+                    <i
+                        class="bi bi-grid me-1">
+                    </i>
+
+                    All
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-primary filter-btn"
+                    data-filter="upcoming">
+
+                    <i
+                        class="bi bi-calendar-event me-1">
+                    </i>
+
+                    Upcoming
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-warning filter-btn"
+                    data-filter="today">
+
+                    <i
+                        class="bi bi-clock me-1">
+                    </i>
+
+                    Due Today
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger filter-btn"
+                    data-filter="overdue">
+
+                    <i
+                        class="bi bi-exclamation-circle me-1">
+                    </i>
+
+                    Overdue
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ASSIGNMENTS
+            ================================================== -->
+
+            <div
+                class="row g-4"
+                id="assignmentsContainer">
+
+
+                {% for assignment in assignments|default([]) %}
+
+
+                <div
+                    class="col-lg-6 assignment-item"
+
+                    data-subject="{{ assignment.subject|default('') }}"
+
+                    data-original-deadline="{{ assignment.deadline|default('') }}">
+
+                    <div
+                        class="card border-0 shadow-sm h-100 assignment-card">
+
+                        <div
+                            class="card-body">
+
+
+                            <!-- SUBJECT + STATUS -->
+
+                            <div
+                                class="d-flex justify-content-between align-items-start gap-2">
+
+
+                                <span
+                                    class="badge bg-primary">
+
+                                    {{ assignment.subject }}
+
+                                </span>
+
+
+                                <span
+                                    class="assignment-status badge status-none">
+
+                                    Checking...
+
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- TITLE -->
+
+                            <h5
+                                class="fw-bold mt-3">
+
+                                {{ assignment.title }}
+
+                            </h5>
+
+
+
+                            <!-- DEADLINE -->
+
+                            <div
+                                class="deadline-text small text-muted mb-3">
+
+                                <i
+                                    class="bi bi-calendar-event">
+                                </i>
+
+                                <span>
+                                    Deadline:
+                                </span>
+
+
+                                <span
+                                    class="deadline-value">
+
+                                    {{ assignment.deadline|default('') }}
+
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- =================================================
+                                 EXISTING QUESTIONS
+                                 NOTHING IS CHANGED HERE
+                            ================================================== -->
+
+                            {% if assignment.questions %}
+
+                            <ol
+                                class="mb-0">
+
+                                {% for question in assignment.questions %}
+
+                                <li
+                                    class="mb-2">
+
+                                    {{ question }}
+
+                                </li>
+
+                                {% endfor %}
+
+                            </ol>
+
+                            {% else %}
+
+                            <p
+                                class="text-muted mb-0">
+
+                                No questions.
+
+                            </p>
+
+                            {% endif %}
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% else %}
+
+
+                <!-- NO ASSIGNMENTS -->
+
+                <div
+                    class="col-12">
+
+                    <div
+                        class="card border-0 shadow-sm">
+
+                        <div
+                            class="empty-state">
+
+                            <i
+                                class="bi bi-journal-x d-block mb-3">
+                            </i>
+
+                            <h5
+                                class="fw-bold">
+
+                                No assignments available
+
+                            </h5>
+
+                            <p
+                                class="mb-0">
+
+                                There are currently no assignments.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- FILTER EMPTY -->
+
+            <div
+                id="noFilterResults"
+                class="card border-0 shadow-sm mt-4 d-none">
+
+                <div
+                    class="empty-state">
+
+                    <i
+                        class="bi bi-search d-block mb-3">
+                    </i>
+
+                    <h5
+                        class="fw-bold">
+
+                        No assignments found
+
+                    </h5>
+
+                    <p
+                        class="mb-0">
+
+                        There are no assignments in this category.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <footer
+                class="sms-footer">
+
+                © 2026 SmartCampus -
+                Student Management System
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     BOOTSTRAP JS
+====================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+
+<!-- =====================================================
+     ASSIGNMENT DEADLINE SYSTEM
+====================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        /* =================================================
+           TODAY
+        ================================================= */
+
+        const now = new Date();
+
+        now.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        /* =================================================
+           COUNTERS
+        ================================================= */
+
+        let upcomingCount = 0;
+
+        let todayCount = 0;
+
+        let overdueCount = 0;
+
+
+        /* =================================================
+           ASSIGNMENTS
+        ================================================= */
+
+        const assignments =
+            document.querySelectorAll(
+                ".assignment-item"
+            );
+
+
+        /* =================================================
+           PROCESS EACH ASSIGNMENT
+        ================================================= */
+
+        assignments.forEach(
+            function (item) {
+
+
+                const subject =
+                    (
+                        item.getAttribute(
+                            "data-subject"
+                        ) || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                /*
+                 * IMPORTANT:
+                 *
+                 * Only PWA and DL get the new deadline.
+                 *
+                 * Existing questions remain untouched.
+                 *
+                 * PWA = 02/10/2026
+                 * DL  = 02/10/2026
+                 */
+
+                let deadlineText =
+                    item.getAttribute(
+                        "data-original-deadline"
+                    ) || "";
+
+
+                if (
+                    subject === "pwa" ||
+                    subject === "dl" ||
+                    subject.includes("progressive web app") ||
+                    subject.includes("deep learning")
+                ) {
+
+                    deadlineText =
+                        "02/10/2026";
+
+                }
+
+
+                const status =
+                    item.querySelector(
+                        ".assignment-status"
+                    );
+
+
+                const deadline =
+                    item.querySelector(
+                        ".deadline-value"
+                    );
+
+
+                /* =================================================
+                   DISPLAY DEADLINE
+                ================================================= */
+
+                if (deadline) {
+
+                    deadline.textContent =
+                        deadlineText;
+
+                }
+
+
+                /* =================================================
+                   NO DEADLINE
+                ================================================= */
+
+                if (!deadlineText) {
+
+                    status.textContent =
+                        "NO DEADLINE";
+
+                    status.className =
+                        "assignment-status badge status-none";
+
+                    return;
+
+                }
+
+
+                /* =================================================
+                   PARSE DATE
+                ================================================= */
+
+                const deadlineDate =
+                    parseDeadline(
+                        deadlineText
+                    );
+
+
+                /* =================================================
+                   INVALID DATE
+                ================================================= */
+
+                if (!deadlineDate) {
+
+                    status.textContent =
+                        "NO DEADLINE";
+
+                    status.className =
+                        "assignment-status badge status-none";
+
+                    return;
+
+                }
+
+
+                deadlineDate.setHours(
+                    0,
+                    0,
+                    0,
+                    0
+                );
+
+
+                /* =================================================
+                   REMOVE OLD DEADLINE COLORS
+                ================================================= */
+
+                deadline.classList.remove(
+                    "deadline-upcoming",
+                    "deadline-today",
+                    "deadline-overdue"
+                );
+
+
+                /* =================================================
+                   OVERDUE
+                ================================================= */
+
+                if (
+                    deadlineDate.getTime() <
+                    now.getTime()
+                ) {
+
+                    overdueCount++;
+
+                    status.textContent =
+                        "OVERDUE";
+
+                    status.className =
+                        "assignment-status badge status-overdue";
+
+                    deadline.classList.add(
+                        "deadline-overdue"
+                    );
+
+                }
+
+
+                /* =================================================
+                   DUE TODAY
+                ================================================= */
+
+                else if (
+                    deadlineDate.getTime() ===
+                    now.getTime()
+                ) {
+
+                    todayCount++;
+
+                    status.textContent =
+                        "DUE TODAY";
+
+                    status.className =
+                        "assignment-status badge status-today";
+
+                    deadline.classList.add(
+                        "deadline-today"
+                    );
+
+                }
+
+
+                /* =================================================
+                   UPCOMING
+                ================================================= */
+
+                else {
+
+                    upcomingCount++;
+
+                    status.textContent =
+                        "UPCOMING";
+
+                    status.className =
+                        "assignment-status badge status-upcoming";
+
+                    deadline.classList.add(
+                        "deadline-upcoming"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           UPDATE COUNTS
+        ================================================= */
+
+        document.getElementById(
+            "upcomingCount"
+        ).textContent =
+            upcomingCount;
+
+
+        document.getElementById(
+            "todayCount"
+        ).textContent =
+            todayCount;
+
+
+        document.getElementById(
+            "overdueCount"
+        ).textContent =
+            overdueCount;
+
+
+
+        /* =================================================
+           FILTER BUTTONS
+        ================================================= */
+
+        const filterButtons =
+            document.querySelectorAll(
+                ".filter-btn"
+            );
+
+
+        const noResults =
+            document.getElementById(
+                "noFilterResults"
+            );
+
+
+        filterButtons.forEach(
+            function (button) {
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+
+                        const filter =
+                            button.getAttribute(
+                                "data-filter"
+                            );
+
+
+                        let visible =
+                            0;
+
+
+                        /* =========================================
+                           RESET BUTTON STYLE
+                        ========================================== */
+
+                        filterButtons.forEach(
+                            function (btn) {
+
+                                btn.classList.remove(
+                                    "btn-primary"
+                                );
+
+                            }
+                        );
+
+
+                        button.classList.add(
+                            "btn-primary"
+                        );
+
+
+                        /* =========================================
+                           FILTER
+                        ========================================== */
+
+                        assignments.forEach(
+                            function (item) {
+
+
+                                let show =
+                                    false;
+
+
+                                if (
+                                    filter ===
+                                    "all"
+                                ) {
+
+                                    show =
+                                        true;
+
+                                }
+
+                                else if (
+                                    filter ===
+                                    "upcoming"
+                                ) {
+
+                                    show =
+                                        item.querySelector(
+                                            ".status-upcoming"
+                                        ) !== null;
+
+                                }
+
+                                else if (
+                                    filter ===
+                                    "today"
+                                ) {
+
+                                    show =
+                                        item.querySelector(
+                                            ".status-today"
+                                        ) !== null;
+
+                                }
+
+                                else if (
+                                    filter ===
+                                    "overdue"
+                                ) {
+
+                                    show =
+                                        item.querySelector(
+                                            ".status-overdue"
+                                        ) !== null;
+
+                                }
+
+
+                                if (show) {
+
+                                    item.classList.remove(
+                                        "d-none"
+                                    );
+
+                                    visible++;
+
+                                }
+
+                                else {
+
+                                    item.classList.add(
+                                        "d-none"
+                                    );
+
+                                }
+
+                            }
+                        );
+
+
+                        /* =========================================
+                           NO FILTER RESULTS
+                        ========================================== */
+
+                        if (
+                            visible === 0
+                        ) {
+
+                            noResults.classList.remove(
+                                "d-none"
+                            );
+
+                        }
+
+                        else {
+
+                            noResults.classList.add(
+                                "d-none"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =====================================================
+   DATE PARSER
+====================================================== */
+
+function parseDeadline(
+    value
+) {
+
+
+    value =
+        value.trim();
+
+
+    /* ---------------------------------------------
+       YYYY-MM-DD
+    --------------------------------------------- */
+
+    if (
+        /^\d{4}-\d{2}-\d{2}$/.test(
+            value
+        )
+    ) {
+
+        const parts =
+            value.split("-");
+
+
+        return new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            Number(parts[2])
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       DD-MM-YYYY
+    --------------------------------------------- */
+
+    if (
+        /^\d{2}-\d{2}-\d{4}$/.test(
+            value
+        )
+    ) {
+
+        const parts =
+            value.split("-");
+
+
+        return new Date(
+            Number(parts[2]),
+            Number(parts[1]) - 1,
+            Number(parts[0])
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       DD/MM/YYYY
+    --------------------------------------------- */
+
+    if (
+        /^\d{2}\/\d{2}\/\d{4}$/.test(
+            value
+        )
+    ) {
+
+        const parts =
+            value.split("/");
+
+
+        return new Date(
+            Number(parts[2]),
+            Number(parts[1]) - 1,
+            Number(parts[0])
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       YYYY/MM/DD
+    --------------------------------------------- */
+
+    if (
+        /^\d{4}\/\d{2}\/\d{2}$/.test(
+            value
+        )
+    ) {
+
+        const parts =
+            value.split("/");
+
+
+        return new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            Number(parts[2])
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       BROWSER FALLBACK
+    --------------------------------------------- */
+
+    const parsed =
+        new Date(value);
+
+
+    if (
+        !isNaN(
+            parsed.getTime()
+        )
+    ) {
+
+        return parsed;
+
+    }
+
+
+    return null;
+
+}
+
+</script>
+
+
+
+<!-- =====================================================
+     THEME SYSTEM
+====================================================== -->
+
+<script>
+
+(function () {
+
+
+    const KEY =
+        "smartcampus-theme";
+
+
+    function setTheme(
+        theme
+    ) {
+
+
+        const dark =
+            theme === "dark";
+
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            dark
+                ? "dark"
+                : "light"
+        );
+
+
+        document.body.classList.toggle(
+            "sc-dark-mode",
+            dark
+        );
+
+
+        localStorage.setItem(
+            KEY,
+            dark
+                ? "dark"
+                : "light"
+        );
+
+
+        document
+            .querySelectorAll(
+                ".sc-theme-toggle"
+            )
+            .forEach(
+                function (button) {
+
+
+                    button.innerHTML =
+                        dark
+
+                        ? '<i class="bi bi-sun-fill"></i>'
+
+                        : '<i class="bi bi-moon-stars-fill"></i>';
+
+
+                    button.title =
+                        dark
+                        ? "Switch to Light Mode"
+                        : "Switch to Dark Mode";
+
+
+                    button.setAttribute(
+                        "aria-label",
+                        button.title
+                    );
+
+                }
+            );
+
+    }
+
+
+
+    function addThemeButton() {
+
+
+        if (
+            document.querySelector(
+                ".sc-theme-toggle"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.type =
+            "button";
+
+
+        button.className =
+            "sc-theme-toggle";
+
+
+        button.addEventListener(
+            "click",
+            function () {
+
+
+                const current =
+                    document.body.classList.contains(
+                        "sc-dark-mode"
+                    )
+                    ? "dark"
+                    : "light";
+
+
+                setTheme(
+                    current === "dark"
+                        ? "light"
+                        : "dark"
+                );
+
+            }
+        );
+
+
+        const target =
+            document.querySelector(
+                ".navbar .d-flex.align-items-center"
+            );
+
+
+        if (target) {
+
+            target.insertBefore(
+                button,
+                target.firstChild
+            );
+
+        }
+
+    }
+
+
+
+    function init() {
+
+
+        const saved =
+            localStorage.getItem(
+                KEY
+            );
+
+
+        setTheme(
+            saved === "dark"
+                ? "dark"
+                : "light"
+        );
+
+
+        addThemeButton();
+
+
+        setTheme(
+            saved === "dark"
+                ? "dark"
+                : "light"
+        );
+
+    }
+
+
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            init
+        );
+
+    }
+
+    else {
+
+        init();
+
+    }
+
+
+})();
+
+</script>
+
+
+
+<!-- Existing UI JS -->
+
+<script
+    src="{{ url_for('static', filename='js/ui.js') }}">
+</script>
+
+
+</body>
+
+</html>

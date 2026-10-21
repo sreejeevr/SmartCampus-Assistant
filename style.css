@@ -1,0 +1,816 @@
+/* =========================================================
+   SmartCampus
+   Global Dark / Light Mode
+   ========================================================= */
+
+
+/* =========================================================
+   LIGHT MODE VARIABLES
+   ========================================================= */
+
+:root {
+
+    --sc-bg: #f6f8fc;
+
+    --sc-surface: #ffffff;
+
+    --sc-surface-2: #f8fafc;
+
+    --sc-text: #172033;
+
+    --sc-muted: #64748b;
+
+    --sc-border: #e2e8f0;
+
+    --sc-primary: #4f46e5;
+
+    --sc-primary-hover: #4338ca;
+
+    --sc-navbar: rgba(255,255,255,.96);
+
+    --sc-shadow:
+        0 10px 30px rgba(15,23,42,.07);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+html {
+    background: var(--sc-bg);
+}
+
+body {
+
+    background-color: var(--sc-bg);
+
+    color: var(--sc-text);
+
+    transition:
+        background-color .25s ease,
+        color .25s ease;
+}
+
+
+/* =========================================================
+   THEME BUTTON
+   ========================================================= */
+
+.sc-theme-toggle {
+
+    width: 42px;
+
+    height: 42px;
+
+    min-width: 42px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 11px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--sc-surface);
+
+    color: var(--sc-text);
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    padding: 0;
+
+    transition:
+        background-color .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+
+    box-shadow:
+        0 3px 10px rgba(15,23,42,.06);
+
+    z-index: 2000;
+}
+
+
+.sc-theme-toggle:hover {
+
+    color: #ffffff;
+
+    background: var(--sc-primary);
+
+    border-color: var(--sc-primary);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(79,70,229,.22);
+}
+
+
+/* Sidebar / pages without navbar */
+
+.sc-theme-toggle-floating {
+
+    position: fixed !important;
+
+    top: 18px;
+
+    right: 20px;
+
+    z-index: 9999;
+}
+
+
+/* =========================================================
+   DARK MODE VARIABLES
+   ========================================================= */
+
+body.sc-dark-mode {
+
+    --sc-bg: #0b1120;
+
+    --sc-surface: #111827;
+
+    --sc-surface-2: #172033;
+
+    --sc-text: #f1f5f9;
+
+    --sc-muted: #a8b3c5;
+
+    --sc-border: #293548;
+
+    --sc-primary: #818cf8;
+
+    --sc-primary-hover: #a5b4fc;
+
+    --sc-navbar: rgba(15,23,42,.97);
+
+    --sc-shadow:
+        0 14px 35px rgba(0,0,0,.28);
+
+    background-color: var(--sc-bg) !important;
+
+    color: var(--sc-text) !important;
+}
+
+
+body.sc-dark-mode html {
+
+    background-color: var(--sc-bg) !important;
+}
+
+
+/* =========================================================
+   BOOTSTRAP BACKGROUNDS
+   ========================================================= */
+
+body.sc-dark-mode .bg-light,
+body.sc-dark-mode .bg-white {
+
+    background-color:
+        var(--sc-surface) !important;
+}
+
+
+body.sc-dark-mode .bg-body {
+
+    background-color:
+        var(--sc-bg) !important;
+}
+
+
+body.sc-dark-mode .bg-body-secondary,
+body.sc-dark-mode .bg-light-subtle {
+
+    background-color:
+        #1e293b !important;
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+body.sc-dark-mode .text-dark,
+body.sc-dark-mode .text-body {
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+body.sc-dark-mode .text-muted {
+
+    color:
+        var(--sc-muted) !important;
+}
+
+
+body.sc-dark-mode .text-secondary {
+
+    color:
+        #b7c1d1 !important;
+}
+
+
+body.sc-dark-mode h1,
+body.sc-dark-mode h2,
+body.sc-dark-mode h3,
+body.sc-dark-mode h4,
+body.sc-dark-mode h5,
+body.sc-dark-mode h6 {
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+body.sc-dark-mode strong,
+body.sc-dark-mode .fw-bold,
+body.sc-dark-mode .fw-semibold {
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+body.sc-dark-mode .navbar,
+body.sc-dark-mode nav.navbar {
+
+    background:
+        var(--sc-navbar) !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode .navbar-brand {
+
+    color:
+        #a5b4fc !important;
+}
+
+
+body.sc-dark-mode .navbar-brand.text-primary {
+
+    color:
+        #a5b4fc !important;
+}
+
+
+body.sc-dark-mode .nav-link {
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+body.sc-dark-mode .card,
+body.sc-dark-mode .dashboard-card,
+body.sc-dark-mode .feature-card,
+body.sc-dark-mode .announcement-item {
+
+    background-color:
+        var(--sc-surface) !important;
+
+    color:
+        var(--sc-text) !important;
+
+    border-color:
+        var(--sc-border) !important;
+
+    box-shadow:
+        var(--sc-shadow) !important;
+}
+
+
+body.sc-dark-mode .card-header,
+body.sc-dark-mode .card-footer {
+
+    background-color:
+        var(--sc-surface-2) !important;
+
+    color:
+        var(--sc-text) !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+/* =========================================================
+   BORDERS
+   ========================================================= */
+
+body.sc-dark-mode .border,
+body.sc-dark-mode .border-top,
+body.sc-dark-mode .border-bottom,
+body.sc-dark-mode .border-start,
+body.sc-dark-mode .border-end {
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+body.sc-dark-mode .form-control,
+body.sc-dark-mode .form-select,
+body.sc-dark-mode textarea,
+body.sc-dark-mode input[type="text"],
+body.sc-dark-mode input[type="email"],
+body.sc-dark-mode input[type="password"],
+body.sc-dark-mode input[type="date"],
+body.sc-dark-mode input[type="number"],
+body.sc-dark-mode input[type="tel"] {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        #0f172a !important;
+
+    border-color:
+        #334155 !important;
+}
+
+
+body.sc-dark-mode .form-control::placeholder,
+body.sc-dark-mode textarea::placeholder {
+
+    color:
+        #7f8da3 !important;
+}
+
+
+body.sc-dark-mode .form-control:focus,
+body.sc-dark-mode .form-select:focus {
+
+    background-color:
+        #111c31 !important;
+
+    color:
+        #ffffff !important;
+
+    border-color:
+        #818cf8 !important;
+
+    box-shadow:
+        0 0 0 .2rem rgba(129,140,248,.18)
+        !important;
+}
+
+
+body.sc-dark-mode .form-label {
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+body.sc-dark-mode .table {
+
+    color:
+        var(--sc-text) !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode
+.table > :not(caption) > * > * {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        transparent !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode .table thead th {
+
+    color:
+        #c4cedd !important;
+}
+
+
+body.sc-dark-mode
+.table-hover > tbody > tr:hover > * {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        rgba(129,140,248,.08)
+        !important;
+}
+
+
+/* =========================================================
+   LIST GROUP
+   ========================================================= */
+
+body.sc-dark-mode .list-group-item {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        var(--sc-surface) !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+body.sc-dark-mode .modal-content {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        var(--sc-surface) !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode .modal-header,
+body.sc-dark-mode .modal-footer {
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode .modal-backdrop {
+
+    opacity: .75 !important;
+}
+
+
+/* =========================================================
+   DROPDOWNS
+   ========================================================= */
+
+body.sc-dark-mode .dropdown-menu {
+
+    background-color:
+        #111827 !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode .dropdown-item {
+
+    color:
+        var(--sc-text) !important;
+}
+
+
+body.sc-dark-mode .dropdown-item:hover {
+
+    background-color:
+        #1e293b !important;
+
+    color:
+        #ffffff !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+body.sc-dark-mode .btn-light,
+body.sc-dark-mode .btn-outline-secondary {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        transparent !important;
+
+    border-color:
+        #475569 !important;
+}
+
+
+body.sc-dark-mode .btn-light:hover,
+body.sc-dark-mode .btn-outline-secondary:hover {
+
+    color:
+        #ffffff !important;
+
+    background-color:
+        #334155 !important;
+}
+
+
+body.sc-dark-mode .btn-outline-primary {
+
+    color:
+        #a5b4fc !important;
+
+    border-color:
+        #6366f1 !important;
+}
+
+
+body.sc-dark-mode .btn-outline-primary:hover {
+
+    color:
+        #ffffff !important;
+
+    background-color:
+        #4f46e5 !important;
+}
+
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+body.sc-dark-mode .alert {
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+body.sc-dark-mode .alert-light {
+
+    color:
+        var(--sc-text) !important;
+
+    background-color:
+        var(--sc-surface-2) !important;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+body.sc-dark-mode
+a:not(.btn):not(.navbar-brand) {
+
+    color:
+        #a5b4fc;
+}
+
+
+body.sc-dark-mode
+a:not(.btn):not(.navbar-brand):hover {
+
+    color:
+        #c7d2fe;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+body.sc-dark-mode footer,
+body.sc-dark-mode .sms-footer {
+
+    color:
+        #94a3b8 !important;
+
+    background-color:
+        #0f172a !important;
+
+    border-color:
+        var(--sc-border) !important;
+}
+
+
+/* =========================================================
+   PROFILE / SOFT AREAS
+   ========================================================= */
+
+body.sc-dark-mode .profile-chip {
+
+    background-color:
+        #1e293b !important;
+
+    color:
+        var(--sc-text) !important;
+
+    border-color:
+        #334155 !important;
+}
+
+
+/* =========================================================
+   FACULTY REDESIGN
+   ========================================================= */
+
+body.sc-dark-mode.faculty-redesign {
+
+    background:
+        #0b1120 !important;
+
+    color:
+        #f1f5f9 !important;
+}
+
+
+body.sc-dark-mode.faculty-redesign
+.faculty-sidebar,
+body.sc-dark-mode.faculty-redesign aside {
+
+    background:
+        linear-gradient(
+            180deg,
+            #0f172a,
+            #111827
+        ) !important;
+}
+
+
+body.sc-dark-mode.faculty-redesign main,
+body.sc-dark-mode.faculty-redesign
+.main-content {
+
+    background:
+        #0b1120 !important;
+}
+
+
+/* =========================================================
+   LANDING PAGE
+   ========================================================= */
+
+body.sc-dark-mode .sms-navbar {
+
+    background:
+        rgba(15,23,42,.97) !important;
+
+    border-color:
+        #293548 !important;
+}
+
+
+body.sc-dark-mode .sms-brand {
+
+    color:
+        #a5b4fc !important;
+}
+
+
+body.sc-dark-mode .sms-hero {
+
+    background:
+        #0b1120 !important;
+
+    color:
+        #f1f5f9 !important;
+}
+
+
+body.sc-dark-mode .sms-hero h1 {
+
+    color:
+        #f1f5f9 !important;
+}
+
+
+body.sc-dark-mode .sms-hero p {
+
+    color:
+        #a8b3c5 !important;
+}
+
+
+body.sc-dark-mode .sms-secondary-action {
+
+    color:
+        #a5b4fc !important;
+
+    background:
+        #111827 !important;
+
+    border-color:
+        #4f46e5 !important;
+}
+
+
+body.sc-dark-mode .sms-login-btn {
+
+    color:
+        #a5b4fc !important;
+
+    background:
+        #111827 !important;
+
+    border-color:
+        #4f46e5 !important;
+}
+
+
+body.sc-dark-mode .sms-login-btn:hover {
+
+    color:
+        #ffffff !important;
+
+    background:
+        #4f46e5 !important;
+}
+
+
+body.sc-dark-mode .sms-footer {
+
+    background:
+        #0f172a !important;
+
+    border-color:
+        #293548 !important;
+}
+
+
+/* =========================================================
+   GENERIC INLINE WHITE/LIGHT SECTIONS
+   ========================================================= */
+
+body.sc-dark-mode
+[style*="background: #fff"],
+body.sc-dark-mode
+[style*="background:#fff"],
+body.sc-dark-mode
+[style*="background: white"],
+body.sc-dark-mode
+[style*="background:white"] {
+
+    background-color:
+        var(--sc-surface) !important;
+}
+
+
+body.sc-dark-mode
+[style*="background: #f8"],
+body.sc-dark-mode
+[style*="background:#f8"],
+body.sc-dark-mode
+[style*="background: #f9"],
+body.sc-dark-mode
+[style*="background:#f9"] {
+
+    background-color:
+        var(--sc-surface-2) !important;
+}
+
+
+/* =========================================================
+   SMOOTH TRANSITION
+   ========================================================= */
+
+body,
+body *,
+body *::before,
+body *::after {
+
+    transition:
+        background-color .18s ease,
+        border-color .18s ease,
+        color .18s ease;
+}

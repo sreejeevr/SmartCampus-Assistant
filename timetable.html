@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Timetable - SmartCampus</title>
+
+
+    <!-- Bootstrap -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+
+
+    <!-- Google Font -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Main CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           BODY
+        ========================== */
+
+        body {
+
+            margin: 0;
+
+            font-family: "Inter", sans-serif;
+
+            background: #f5f7fb;
+
+            color: #172033;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+
+            background: #ffffff !important;
+
+            border-bottom: 1px solid #e2e8f0;
+
+        }
+
+
+        .navbar-brand {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =========================
+           THEME BUTTON
+        ========================== */
+
+        .theme-btn {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 10px;
+
+            border: 1px solid #dbe2ea;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .theme-btn:hover {
+
+            background: #4f46e5;
+
+            color: #ffffff;
+
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar {
+
+            min-height: calc(100vh - 57px);
+
+            background: #ffffff;
+
+            border-right: 1px solid #e2e8f0;
+
+        }
+
+
+        .sidebar-title {
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.05em;
+
+            color: #94a3b8;
+
+        }
+
+
+        .sidebar .nav-link {
+
+            color: #475569;
+
+            padding: 10px 12px;
+
+            border-radius: 9px;
+
+            font-weight: 500;
+
+            margin-bottom: 2px;
+
+        }
+
+
+        .sidebar .nav-link:hover {
+
+            background: #f1f5ff;
+
+            color: #4f46e5;
+
+        }
+
+
+        .sidebar .nav-link.active {
+
+            background: linear-gradient(
+                135deg,
+                #7040ff,
+                #438cff
+            );
+
+            color: #ffffff;
+
+        }
+
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .main-content {
+
+            padding: 28px;
+
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================== */
+
+        .page-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .page-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #7040ff,
+                #438cff
+            );
+
+            color: #ffffff;
+
+            font-size: 23px;
+
+            box-shadow:
+                0 8px 20px rgba(79,70,229,0.22);
+
+        }
+
+
+        .page-title {
+
+            margin: 0;
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+        }
+
+
+        .page-subtitle {
+
+            margin: 4px 0 0;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================
+           TIMETABLE CARD
+        ========================== */
+
+        .timetable-card {
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 20px rgba(15,23,42,0.06);
+
+        }
+
+
+        .card-top {
+
+            padding: 16px 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: #f8fafc;
+
+            border-bottom: 1px solid #e2e8f0;
+
+        }
+
+
+        .card-top-title {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+        }
+
+
+        .batch-badge {
+
+            background: rgba(79,70,229,0.1);
+
+            color: #4f46e5;
+
+            padding: 6px 10px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =========================
+           TABLE SCROLL
+        ========================== */
+
+        .table-container {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        /* =========================
+           TIMETABLE
+        ========================== */
+
+        .timetable {
+
+            width: 100%;
+
+            min-width: 1250px;
+
+            border-collapse: collapse;
+
+            table-layout: fixed;
+
+        }
+
+
+        /* =========================
+           TABLE HEADER
+        ========================== */
+
+        .timetable thead th {
+
+            background: #eef2ff;
+
+            color: #3730a3;
+
+            border: 1px solid #cfd7e3;
+
+            padding: 12px 7px;
+
+            text-align: center;
+
+            vertical-align: middle;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+
+        .timetable thead th:first-child {
+
+            width: 75px;
+
+            background: #e2e8f0;
+
+            color: #334155;
+
+        }
+
+
+        /* =========================
+           TABLE BODY
+        ========================== */
+
+        .timetable tbody td,
+
+        .timetable tbody th {
+
+            border: 1px solid #d5dce5;
+
+            padding: 10px 7px;
+
+            text-align: center;
+
+            vertical-align: middle;
+
+            min-height: 85px;
+
+        }
+
+
+        /* DAY */
+
+        .day-cell {
+
+            width: 75px;
+
+            background: #f1f5f9;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: #334155;
+
+        }
+
+
+        /* SUBJECT */
+
+        .subject {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            line-height: 1.35;
+
+            color: #172033;
+
+        }
+
+
+        /* FACULTY */
+
+        .faculty {
+
+            margin-top: 4px;
+
+            font-size: 9px;
+
+            line-height: 1.3;
+
+            color: #64748b;
+
+        }
+
+
+        /* ROOM */
+
+        .room {
+
+            margin-top: 3px;
+
+            font-size: 8px;
+
+            color: #94a3b8;
+
+        }
+
+
+        /* BREAK */
+
+        .break-cell {
+
+            background: #e5e7eb !important;
+
+            color: #475569 !important;
+
+            font-weight: 800;
+
+            font-size: 10px;
+
+            letter-spacing: 0.04em;
+
+        }
+
+
+        /* TODAY */
+
+        .today-row .day-cell {
+
+            background: #4f46e5;
+
+            color: #ffffff;
+
+        }
+
+
+        .today-label {
+
+            display: block;
+
+            margin-top: 4px;
+
+            font-size: 7px;
+
+            background: #ffffff;
+
+            color: #4f46e5;
+
+            padding: 2px 5px;
+
+            border-radius: 4px;
+
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+
+            text-align: center;
+
+            padding: 22px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================
+           DARK MODE
+        ========================== */
+
+        body.dark-mode {
+
+            background: #0b1120;
+
+            color: #f1f5f9;
+
+        }
+
+
+        body.dark-mode .navbar {
+
+            background: #111827 !important;
+
+            border-color: #293548;
+
+        }
+
+
+        body.dark-mode .navbar-brand {
+
+            color: #a5b4fc !important;
+
+        }
+
+
+        body.dark-mode .sidebar {
+
+            background: #111827;
+
+            border-color: #293548;
+
+        }
+
+
+        body.dark-mode .sidebar .nav-link {
+
+            color: #cbd5e1;
+
+        }
+
+
+        body.dark-mode .sidebar .nav-link:hover {
+
+            background: #172033;
+
+            color: #a5b4fc;
+
+        }
+
+
+        body.dark-mode .sidebar-title {
+
+            color: #64748b;
+
+        }
+
+
+        body.dark-mode .timetable-card {
+
+            background: #111827;
+
+            border-color: #293548;
+
+            box-shadow: none;
+
+        }
+
+
+        body.dark-mode .card-top {
+
+            background: #172033;
+
+            border-color: #293548;
+
+        }
+
+
+        body.dark-mode .page-title {
+
+            color: #f1f5f9;
+
+        }
+
+
+        body.dark-mode .page-subtitle {
+
+            color: #94a3b8;
+
+        }
+
+
+        body.dark-mode .timetable thead th {
+
+            background: #172033;
+
+            color: #c7d2fe;
+
+            border-color: #334155;
+
+        }
+
+
+        body.dark-mode .timetable thead th:first-child {
+
+            background: #1e293b;
+
+            color: #cbd5e1;
+
+        }
+
+
+        body.dark-mode .timetable tbody td,
+
+        body.dark-mode .timetable tbody th {
+
+            background: #111827;
+
+            color: #f1f5f9;
+
+            border-color: #293548;
+
+        }
+
+
+        body.dark-mode .day-cell {
+
+            background: #172033 !important;
+
+            color: #cbd5e1 !important;
+
+        }
+
+
+        body.dark-mode .subject {
+
+            color: #f1f5f9;
+
+        }
+
+
+        body.dark-mode .faculty {
+
+            color: #a8b3c5;
+
+        }
+
+
+        body.dark-mode .room {
+
+            color: #64748b;
+
+        }
+
+
+        body.dark-mode .break-cell {
+
+            background: #1f2937 !important;
+
+            color: #a8b3c5 !important;
+
+        }
+
+
+        body.dark-mode .theme-btn {
+
+            background: #172033;
+
+            border-color: #334155;
+
+            color: #f1f5f9;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 992px) {
+
+            .sidebar {
+
+                min-height: auto;
+
+                border-right: none;
+
+                border-bottom: 1px solid #e2e8f0;
+
+            }
+
+            .main-content {
+
+                padding: 18px;
+
+            }
+
+        }
+
+
+        @media (max-width: 576px) {
+
+            .page-title {
+
+                font-size: 24px;
+
+            }
+
+            .page-icon {
+
+                width: 45px;
+
+                height: 45px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container-fluid px-3 px-md-4">
+
+
+        <a
+            class="navbar-brand text-primary"
+            href="{{ url_for('student_dashboard') }}">
+
+            <i class="bi bi-mortarboard-fill me-2"></i>
+
+            SmartCampus
+
+        </a>
+
+
+        <div class="d-flex align-items-center gap-2">
+
+
+            <!-- THEME BUTTON -->
+
+            <button
+                type="button"
+                class="theme-btn"
+                id="themeButton"
+                title="Toggle theme">
+
+                <i
+                    class="bi bi-moon-stars-fill"
+                    id="themeIcon">
+                </i>
+
+            </button>
+
+
+            <!-- STUDENT NAME -->
+
+            <span class="d-none d-md-inline fw-semibold">
+
+                {{ session.get('name', 'Student') }}
+
+            </span>
+
+
+            <!-- ROLE -->
+
+            <span class="badge bg-primary">
+
+                Student
+
+            </span>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="btn btn-outline-danger btn-sm">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     PAGE
+====================================================== -->
+
+<div class="container-fluid">
+
+    <div class="row">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="col-lg-2 sidebar p-0">
+
+
+            <div class="p-3">
+
+
+                <div class="sidebar-title mb-2">
+
+                    STUDENT PORTAL
+
+                </div>
+
+
+                <nav class="nav nav-pills flex-column">
+
+
+                    <!-- DASHBOARD -->
+
+                    <a
+                        href="{{ url_for('student_dashboard') }}"
+                        class="nav-link
+                        {% if request.endpoint == 'student_dashboard' %}
+                        active
+                        {% endif %}">
+
+                        <i class="bi bi-grid me-2"></i>
+
+                        Dashboard
+
+                    </a>
+
+
+                    <!-- PROFILE -->
+
+                    <a
+                        href="{{ url_for('student_profile') }}"
+                        class="nav-link
+                        {% if request.endpoint == 'student_profile' %}
+                        active
+                        {% endif %}">
+
+                        <i class="bi bi-person me-2"></i>
+
+                        Profile
+
+                    </a>
+
+
+                    <!-- ATTENDANCE -->
+
+                    <a
+                        href="{{ url_for('student_attendance') }}"
+                        class="nav-link
+                        {% if request.endpoint == 'student_attendance' %}
+                        active
+                        {% endif %}">
+
+                        <i class="bi bi-calendar-check me-2"></i>
+
+                        Attendance
+
+                    </a>
+
+
+                    <!-- TIMETABLE -->
+
+                    <a
+                        href="{{ url_for('student_timetable') }}"
+                        class="nav-link
+                        {% if request.endpoint == 'student_timetable' %}
+                        active
+                        {% endif %}">
+
+                        <i class="bi bi-calendar3 me-2"></i>
+
+                        Timetable
+
+                    </a>
+
+
+                    <!-- ASSIGNMENTS -->
+
+                    <a
+                        href="{{ url_for('student_assignments') }}"
+                        class="nav-link
+                        {% if request.endpoint == 'student_assignments' %}
+                        active
+                        {% endif %}">
+
+                        <i class="bi bi-journal-text me-2"></i>
+
+                        Assignments
+
+                    </a>
+
+
+                    <!-- ANNOUNCEMENTS -->
+
+                    <a
+                        href="{{ url_for('student_announcements') }}"
+                        class="nav-link
+                        {% if request.endpoint == 'student_announcements' %}
+                        active
+                        {% endif %}">
+
+                        <i class="bi bi-megaphone me-2"></i>
+
+                        Announcements
+
+                    </a>
+
+                </nav>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <main class="col-lg-10 main-content">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="page-header">
+
+
+                <div class="page-icon">
+
+                    <i class="bi bi-calendar3"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h1 class="page-title">
+
+                        Timetable
+
+                    </h1>
+
+
+                    <p class="page-subtitle">
+
+                        Weekly class timetable
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TIMETABLE CARD
+            ================================================== -->
+
+            <div class="timetable-card">
+
+
+                <!-- CARD HEADER -->
+
+                <div class="card-top">
+
+
+                    <div class="card-top-title">
+
+                        <i class="bi bi-calendar-week me-2"></i>
+
+                        Weekly Schedule
+
+                    </div>
+
+
+                    <span class="batch-badge">
+
+                        24 Batch 3 · 5th Semester
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TABLE
+                ================================================== -->
+
+                <div class="table-container">
+
+
+                    <table class="timetable">
+
+
+                        <!-- =========================================
+                             HEADER
+                        ========================================== -->
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    DAY
+                                </th>
+
+
+                                <th>
+                                    PERIOD 1<br>
+                                    9:00 - 10:00
+                                </th>
+
+
+                                <th>
+                                    PERIOD 2<br>
+                                    10:00 - 11:00
+                                </th>
+
+
+                                <th>
+                                    BREAK<br>
+                                    11:00 - 11:15
+                                </th>
+
+
+                                <th>
+                                    PERIOD 3<br>
+                                    11:15 - 12:15
+                                </th>
+
+
+                                <th>
+                                    PERIOD 4<br>
+                                    12:15 - 1:00
+                                </th>
+
+
+                                <th>
+                                    BREAK<br>
+                                    1:00 - 2:00
+                                </th>
+
+
+                                <th>
+                                    PERIOD 5<br>
+                                    2:00 - 3:00
+                                </th>
+
+
+                                <th>
+                                    PERIOD 6<br>
+                                    3:00 - 3:45
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <!-- =========================================
+                             BODY
+                        ========================================== -->
+
+                        <tbody>
+
+
+                            <!-- =====================================
+                                 MONDAY
+                            ====================================== -->
+
+                            <tr
+                                {% if today_name == 'Monday' %}
+                                    class="today-row"
+                                {% endif %}>
+
+                                <th class="day-cell">
+
+                                    MON
+
+                                    {% if today_name == 'Monday' %}
+
+                                        <span class="today-label">
+                                            TODAY
+                                        </span>
+
+                                    {% endif %}
+
+                                </th>
+
+
+                                <!-- P1 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Progressive Web App - T
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Amrin
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P2 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        POV
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                    <div class="room">
+                                        LH-9, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        OSS
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Abhirami
+                                    </div>
+
+                                    <div class="room">
+                                        LH-3, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        IOT
+                                    </div>
+
+                                    <div class="faculty">
+                                        Mr. RK
+                                    </div>
+
+                                    <div class="room">
+                                        LH-2, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        R Programming
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P3 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Deep Learning (T)
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Geethanjali
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P4 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        NLP
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P5 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Software Engineering
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P6 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Placement Training
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- =====================================
+                                 TUESDAY
+                            ====================================== -->
+
+                            <tr
+                                {% if today_name == 'Tuesday' %}
+                                    class="today-row"
+                                {% endif %}>
+
+                                <th class="day-cell">
+
+                                    TUE
+
+                                    {% if today_name == 'Tuesday' %}
+
+                                        <span class="today-label">
+                                            TODAY
+                                        </span>
+
+                                    {% endif %}
+
+                                </th>
+
+
+                                <!-- P1 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Professional Development
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Pooja
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P2 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Progressive Web App - T
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Amrin
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P3 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Deep Learning - LAB
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Geethanjali
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P4 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        NLP
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P5 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        NLP
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P6 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Software Engineering
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- =====================================
+                                 WEDNESDAY
+                            ====================================== -->
+
+                            <tr
+                                {% if today_name == 'Wednesday' %}
+                                    class="today-row"
+                                {% endif %}>
+
+                                <th class="day-cell">
+
+                                    WED
+
+                                    {% if today_name == 'Wednesday' %}
+
+                                        <span class="today-label">
+                                            TODAY
+                                        </span>
+
+                                    {% endif %}
+
+                                </th>
+
+
+                                <!-- P1 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        POV
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                    <div class="room">
+                                        LH-9, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        OSS
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Abhirami
+                                    </div>
+
+                                    <div class="room">
+                                        LH-3, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        IOT
+                                    </div>
+
+                                    <div class="faculty">
+                                        Mr. RK
+                                    </div>
+
+                                    <div class="room">
+                                        LH-2, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        R Programming
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P2 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Placement Training
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P3 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Progressive Web App - T
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Amrin
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P4 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Software Engineering
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P5 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Deep Learning (T)
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Geethanjali
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P6 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        PET
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- =====================================
+                                 THURSDAY
+                            ====================================== -->
+
+                            <tr
+                                {% if today_name == 'Thursday' %}
+                                    class="today-row"
+                                {% endif %}>
+
+                                <th class="day-cell">
+
+                                    THU
+
+                                    {% if today_name == 'Thursday' %}
+
+                                        <span class="today-label">
+                                            TODAY
+                                        </span>
+
+                                    {% endif %}
+
+                                </th>
+
+
+                                <!-- P1 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        NLP
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P2 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Professional Development
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Pooja
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P3 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        POV
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                    <div class="room">
+                                        LH-9, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        OSS
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Abhirami
+                                    </div>
+
+                                    <div class="room">
+                                        LH-3, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        IOT
+                                    </div>
+
+                                    <div class="faculty">
+                                        Mr. RK
+                                    </div>
+
+                                    <div class="room">
+                                        LH-2, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        R Programming
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P4 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Software Engineering
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P5 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Progressive Web App - LAB
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Amrin
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P6 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Progressive Web App - LAB
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Amrin
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- =====================================
+                                 FRIDAY
+                            ====================================== -->
+
+                            <tr
+                                {% if today_name == 'Friday' %}
+                                    class="today-row"
+                                {% endif %}>
+
+                                <th class="day-cell">
+
+                                    FRI
+
+                                    {% if today_name == 'Friday' %}
+
+                                        <span class="today-label">
+                                            TODAY
+                                        </span>
+
+                                    {% endif %}
+
+                                </th>
+
+
+                                <!-- P1 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Deep Learning - LAB
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Geethanjali
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P2 -->
+
+                                <td>
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P3 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Professional Development
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Pooja
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P4 -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P5 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Software Engineering
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P6 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        PET
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <!-- =====================================
+                                 SATURDAY
+                            ====================================== -->
+
+                            <tr
+                                {% if today_name == 'Saturday' %}
+                                    class="today-row"
+                                {% endif %}>
+
+                                <th class="day-cell">
+
+                                    SAT
+
+                                    {% if today_name == 'Saturday' %}
+
+                                        <span class="today-label">
+                                            TODAY
+                                        </span>
+
+                                    {% endif %}
+
+                                </th>
+
+
+                                <!-- P1 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        POV
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Anjana
+                                    </div>
+
+                                    <div class="room">
+                                        LH-9, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        OSS
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Abhirami
+                                    </div>
+
+                                    <div class="room">
+                                        LH-3, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        IOT
+                                    </div>
+
+                                    <div class="faculty">
+                                        Mr. RK
+                                    </div>
+
+                                    <div class="room">
+                                        LH-2, 3rd Floor
+                                    </div>
+
+
+                                    <div class="subject mt-1">
+                                        R Programming
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P2 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Placement Training
+                                    </div>
+
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P3 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Club Activities
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Nagavaralakshmi /
+                                        Ms. Amrin /
+                                        Ms. Geethanjali
+                                    </div>
+
+                                </td>
+
+
+                                <!-- P4 -->
+
+                                <td>
+                                </td>
+
+
+                                <!-- BREAK -->
+
+                                <td class="break-cell">
+                                    BREAK
+                                </td>
+
+
+                                <!-- P5 -->
+
+                                <td>
+                                </td>
+
+
+                                <!-- P6 -->
+
+                                <td>
+
+                                    <div class="subject">
+                                        Progressive Web App - LAB
+                                    </div>
+
+                                    <div class="faculty">
+                                        Ms. Amrin
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FOOTER -->
+
+            <div class="footer">
+
+                © 2026 SmartCampus - Student Management System
+
+            </div>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+    const themeButton =
+        document.getElementById("themeButton");
+
+    const themeIcon =
+        document.getElementById("themeIcon");
+
+
+    function applyTheme(theme) {
+
+        if (theme === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+            themeIcon.className =
+                "bi bi-sun-fill";
+
+        } else {
+
+            document.body.classList.remove("dark-mode");
+
+            themeIcon.className =
+                "bi bi-moon-stars-fill";
+
+        }
+
+        localStorage.setItem(
+            "smartcampus-theme",
+            theme
+        );
+
+    }
+
+
+    const savedTheme =
+        localStorage.getItem(
+            "smartcampus-theme"
+        );
+
+
+    if (savedTheme === "dark") {
+
+        applyTheme("dark");
+
+    } else {
+
+        applyTheme("light");
+
+    }
+
+
+    themeButton.addEventListener(
+        "click",
+        function () {
+
+            const isDark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+            applyTheme(
+                isDark
+                    ? "light"
+                    : "dark"
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Assignment - SmartCampus</title>
+    
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<style>
+
+:root{
+    --sc-bg:#f6f8fc;
+    --sc-surface:#ffffff;
+    --sc-surface-2:#f8fafc;
+    --sc-text:#172033;
+    --sc-muted:#64748b;
+    --sc-border:#e2e8f0;
+    --sc-primary:#4f46e5;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+    background:var(--sc-bg)!important;
+    color:var(--sc-text);
+    transition:background-color .2s ease,color .2s ease;
+}
+.sc-theme-toggle{
+    width:42px;height:42px;min-width:42px;
+    border:1px solid var(--sc-border);
+    border-radius:11px;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--sc-surface);color:var(--sc-text);
+    cursor:pointer;padding:0;font-size:18px;
+    box-shadow:0 3px 10px rgba(15,23,42,.08);
+}
+.sc-theme-toggle:hover{background:var(--sc-primary);border-color:var(--sc-primary);color:#fff}
+body.sc-dark-mode{
+    --sc-bg:#0b1120;
+    --sc-surface:#111827;
+    --sc-surface-2:#172033;
+    --sc-text:#f1f5f9;
+    --sc-muted:#a8b3c5;
+    --sc-border:#293548;
+    --sc-primary:#818cf8;
+    background:var(--sc-bg)!important;
+    color:var(--sc-text)!important;
+}
+body.sc-dark-mode .bg-light,
+body.sc-dark-mode .bg-white{background-color:var(--sc-surface)!important}
+body.sc-dark-mode .text-muted{color:var(--sc-muted)!important}
+body.sc-dark-mode .text-dark,
+body.sc-dark-mode .text-body,
+body.sc-dark-mode h1,body.sc-dark-mode h2,body.sc-dark-mode h3,
+body.sc-dark-mode h4,body.sc-dark-mode h5,body.sc-dark-mode h6,
+body.sc-dark-mode .fw-bold,body.sc-dark-mode .fw-semibold{
+    color:var(--sc-text)!important
+}
+body.sc-dark-mode .navbar,
+body.sc-dark-mode nav.navbar{
+    background:var(--sc-surface)!important;
+    border-color:var(--sc-border)!important;
+}
+body.sc-dark-mode .navbar-brand{color:#a5b4fc!important}
+body.sc-dark-mode .nav-link{color:var(--sc-text)!important}
+body.sc-dark-mode .card,
+body.sc-dark-mode .modal-content,
+body.sc-dark-mode .list-group-item{
+    background:var(--sc-surface)!important;
+    color:var(--sc-text)!important;
+    border-color:var(--sc-border)!important;
+}
+body.sc-dark-mode .card-header,
+body.sc-dark-mode .card-footer,
+body.sc-dark-mode .modal-header,
+body.sc-dark-mode .modal-footer{
+    background:var(--sc-surface-2)!important;
+    color:var(--sc-text)!important;
+    border-color:var(--sc-border)!important;
+}
+body.sc-dark-mode .form-control,
+body.sc-dark-mode .form-select,
+body.sc-dark-mode textarea,
+body.sc-dark-mode input{
+    background:#0f172a!important;
+    color:var(--sc-text)!important;
+    border-color:#334155!important;
+}
+body.sc-dark-mode .form-control::placeholder,
+body.sc-dark-mode textarea::placeholder{color:#7f8da3!important}
+body.sc-dark-mode .form-label{color:var(--sc-text)!important}
+body.sc-dark-mode .table{color:var(--sc-text)!important}
+body.sc-dark-mode .table>:not(caption)>*>*{
+    color:var(--sc-text)!important;
+    background:transparent!important;
+    border-color:var(--sc-border)!important;
+}
+body.sc-dark-mode .table-hover>tbody>tr:hover>*{
+    background:rgba(129,140,248,.08)!important;
+    color:var(--sc-text)!important;
+}
+body.sc-dark-mode .dropdown-menu{
+    background:#111827!important;border-color:var(--sc-border)!important
+}
+body.sc-dark-mode .dropdown-item{color:var(--sc-text)!important}
+body.sc-dark-mode .dropdown-item:hover{
+    background:#1e293b!important;color:#fff!important
+}
+body.sc-dark-mode .btn-light,
+body.sc-dark-mode .btn-outline-secondary{
+    color:var(--sc-text)!important;
+    background:transparent!important;
+    border-color:#475569!important
+}
+body.sc-dark-mode .btn-outline-primary{
+    color:#a5b4fc!important;border-color:#6366f1!important
+}
+body.sc-dark-mode .alert-light{
+    color:var(--sc-text)!important;background:var(--sc-surface-2)!important
+}
+body.sc-dark-mode footer,
+body.sc-dark-mode .sms-footer{
+    background:#0f172a!important;
+    color:#94a3b8!important;
+    border-color:var(--sc-border)!important
+}
+body.sc-dark-mode .sms-sidebar{
+    background:var(--sc-surface)!important;
+    border-color:var(--sc-border)!important
+}
+body.sc-dark-mode .sms-sidebar .text-muted{color:var(--sc-muted)!important}
+body.sc-dark-mode .sms-nav-link{color:var(--sc-muted)!important}
+body.sc-dark-mode .sms-nav-link:hover,
+body.sc-dark-mode .sms-nav-link.active{
+    color:#a5b4fc!important;background:#172033!important
+}
+body.sc-dark-mode .sms-user,
+body.sc-dark-mode .page-header,
+body.sc-dark-mode .announcement-card,
+body.sc-dark-mode .student-card{
+    color:var(--sc-text)!important
+}
+
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='icon.svg') }}">
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}"><meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+</head>
+<body class="">
+<nav class="navbar bg-white shadow-sm border-bottom sticky-top">
+ <div class="container-fluid px-3 px-md-4">
+  <a class="navbar-brand fw-bold text-primary" href="{{ url_for('faculty_dashboard') }}"><i class="bi bi-mortarboard-fill me-2"></i>SmartCampus</a>
+  <div class="d-flex align-items-center gap-2">
+   <span class="d-none d-md-inline fw-semibold">{{ session.get('name','Faculty') }}</span>
+   <span class="badge bg-primary">Faculty</span>
+   <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+  </div>
+ </div>
+</nav>
+<div class="container-fluid">
+ <div class="row">
+  <aside class="col-lg-2 p-0 border-end min-vh-100 bg-white">
+   <div class="p-3">
+    <div class="fw-bold fs-5 mb-1">Faculty Portal</div>
+    <div class="small text-muted mb-3">{{ session.get('name','Faculty') }}</div>
+    <nav class="nav nav-pills flex-column gap-1">
+     <a class="nav-link {% if request.endpoint=='faculty_dashboard' %}active{% endif %}" href="{{ url_for('faculty_dashboard') }}"><i class="bi bi-grid me-2"></i>Dashboard</a>
+     <a class="nav-link {% if request.endpoint in ['faculty_students','faculty_student_view','faculty_student_edit'] %}active{% endif %}" href="{{ url_for('faculty_students') }}"><i class="bi bi-people me-2"></i>Students</a>
+     <a class="nav-link {% if request.endpoint=='faculty_attendance' %}active{% endif %}" href="{{ url_for('faculty_attendance') }}"><i class="bi bi-calendar-check me-2"></i>Attendance</a>
+     <a class="nav-link {% if request.endpoint in ['faculty_assignments','faculty_assignment_edit'] %}active{% endif %}" href="{{ url_for('faculty_assignments') }}"><i class="bi bi-journal-text me-2"></i>Assignments</a>
+     <a class="nav-link {% if request.endpoint=='faculty_announcements' %}active{% endif %}" href="{{ url_for('faculty_announcements') }}"><i class="bi bi-megaphone me-2"></i>Announcements</a>
+    </nav>
+    <div class="mt-5 pt-5">
+     <a href="{{ url_for('logout') }}" class="nav-link text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+    </div>
+   </div>
+  </aside>
+  <main class="col-lg-10 p-3 p-md-4">
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+  <div>
+    <h2 class="fw-bold mb-1">Assignments</h2>
+    <p class="text-muted mb-0">Create new assignments and manage the ones already published.</p>
+  </div>
+  <span class="badge text-bg-primary fs-6">{{ assignments|length }} Total</span>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}
+      <button class="btn-close" data-bs-dismiss="alert"></button></div>
+  {% endfor %}
+{% endwith %}
+
+<div class="card border-0 shadow-sm mb-4"><div class="card-body p-4">
+  <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle-fill text-primary me-2"></i>Add New Assignment</h5>
+  <form method="POST">
+    <div class="row g-3">
+      <div class="col-md-6"><label class="form-label">Subject</label>
+        <select name="subject" class="form-select" required>
+          {% for subject in ['Progressive Web App','Internet of Things (IoT)','Software Engineering','Deep Learning','Natural Language Processing (NLP)'] %}<option>{{ subject }}</option>{% endfor %}
+        </select></div>
+      <div class="col-md-6"><label class="form-label">Title</label><input name="title" class="form-control" placeholder="Assignment title" required></div>
+      <div class="col-md-6"><label class="form-label">Deadline</label><input type="date" name="deadline_date" class="form-control"></div>
+      <div class="col-12"><label class="form-label">Questions <span class="text-muted fw-normal">(one per line)</span></label>
+        <textarea name="questions" class="form-control" rows="5" placeholder="Enter each question on a new line"></textarea></div>
+    </div>
+    <button class="btn btn-primary mt-3">Add Assignment</button>
+  </form>
+</div></div>
+
+<div class="row g-3">
+{% for a in assignments %}
+  <div class="col-lg-6"><div class="card border-0 shadow-sm h-100"><div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+      <div><span class="badge text-bg-primary mb-2">{{ a.subject }}</span><h5 class="fw-bold mb-0">{{ a.title }}</h5></div>
+      <a href="{{ url_for('faculty_assignment_edit', assignment_id=a.id) }}" class="btn btn-outline-primary btn-sm">Edit</a>
+    </div>
+    <div class="small text-muted mb-3"><i class="bi bi-calendar-event me-1"></i>Deadline: {{ a.deadline_date or 'Not set' }}</div>
+    {% if a.questions %}<ol class="mb-0 ps-3">{% for q in a.questions %}<li class="mb-1">{{ q }}</li>{% endfor %}</ol>
+    {% else %}<div class="text-muted">No questions added.</div>{% endif %}
+  </div></div></div>
+{% else %}
+  <div class="col-12"><div class="card border-0 shadow-sm"><div class="card-body text-center text-muted p-5">
+    <i class="bi bi-journal-x display-5 d-block mb-2"></i>No assignments yet.</div></div></div>
+{% endfor %}
+</div>
+</main>
+ </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+(function(){
+    const KEY="smartcampus-theme";
+
+    function setTheme(theme){
+        const dark=theme==="dark";
+        document.documentElement.setAttribute("data-theme",dark?"dark":"light");
+        document.body.classList.toggle("sc-dark-mode",dark);
+        localStorage.setItem(KEY,dark?"dark":"light");
+
+        document.querySelectorAll(".sc-theme-toggle").forEach(function(btn){
+            btn.innerHTML=dark
+                ? '<i class="bi bi-sun-fill"></i>'
+                : '<i class="bi bi-moon-stars-fill"></i>';
+            btn.title=dark ? "Switch to Light Mode" : "Switch to Dark Mode";
+            btn.setAttribute("aria-label",btn.title);
+        });
+    }
+
+    function addThemeButton(){
+        if(document.querySelector(".sc-theme-toggle")) return;
+
+        const btn=document.createElement("button");
+        btn.type="button";
+        btn.className="sc-theme-toggle";
+        btn.addEventListener("click",function(){
+            setTheme(document.body.classList.contains("sc-dark-mode")?"light":"dark");
+        });
+
+        const target=
+            document.querySelector(".sms-navbar .d-flex.align-items-center") ||
+            document.querySelector(".navbar .d-flex.align-items-center") ||
+            document.querySelector("nav .d-flex.align-items-center") ||
+            document.querySelector(".topbar .d-flex.align-items-center");
+
+        if(target){
+            target.insertBefore(btn,target.firstChild);
+        }else{
+            btn.style.position="fixed";
+            btn.style.top="18px";
+            btn.style.right="20px";
+            btn.style.zIndex="99999";
+            document.body.appendChild(btn);
+        }
+    }
+
+    function init(){
+        setTheme(localStorage.getItem(KEY)==="dark"?"dark":"light");
+        addThemeButton();
+        setTheme(localStorage.getItem(KEY)==="dark"?"dark":"light");
+    }
+
+    if(document.readyState==="loading"){
+        document.addEventListener("DOMContentLoaded",init);
+    }else{
+        init();
+    }
+})();
+</script>
+
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+</body>
+</html>

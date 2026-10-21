@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - SmartCampus</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- SmartCampus CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        /* =====================================================
+           THEME VARIABLES
+        ===================================================== */
+
+        :root {
+            --sc-bg: #f5f7fb;
+            --sc-card: #ffffff;
+            --sc-text: #172033;
+            --sc-muted: #667085;
+            --sc-border: #e4e7ec;
+            --sc-primary: #4f46e5;
+            --sc-sidebar: #ffffff;
+            --sc-sidebar-hover: #f1f4ff;
+            --sc-sidebar-active: #eaf0ff;
+        }
+
+        body.sc-dark-mode {
+            --sc-bg: #0b1120;
+            --sc-card: #111827;
+            --sc-text: #f1f5f9;
+            --sc-muted: #a5b1c2;
+            --sc-border: #293548;
+            --sc-primary: #818cf8;
+            --sc-sidebar: #111827;
+            --sc-sidebar-hover: #1b2538;
+            --sc-sidebar-active: #202b45;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--sc-bg) !important;
+            color: var(--sc-text);
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease;
+        }
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .student-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: var(--sc-sidebar);
+            border-right: 1px solid var(--sc-border);
+            padding: 22px 16px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition:
+                background-color 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .student-brand {
+            padding: 5px 10px 25px;
+        }
+
+        .student-brand a {
+            text-decoration: none;
+            color: var(--sc-text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sc-primary);
+            color: white;
+            font-size: 21px;
+        }
+
+        .student-brand-text strong {
+            display: block;
+            font-size: 15px;
+            line-height: 1.2;
+        }
+
+        .student-brand-text small {
+            display: block;
+            color: var(--sc-muted);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        /* =====================================================
+           USER
+        ===================================================== */
+
+        .student-user {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 13px 10px;
+            margin-bottom: 22px;
+            border-radius: 12px;
+            background: var(--sc-sidebar-hover);
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sc-primary);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .student-user-info {
+            min-width: 0;
+        }
+
+        .student-user-info strong {
+            display: block;
+            color: var(--sc-text);
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .student-user-info span {
+            display: block;
+            color: var(--sc-muted);
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        /* =====================================================
+           MENU
+        ===================================================== */
+
+        .menu-label {
+            color: var(--sc-muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            padding: 0 11px;
+            margin-bottom: 8px;
+        }
+
+        .student-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .student-nav .nav-link {
+            color: var(--sc-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .student-nav .nav-link i {
+            width: 21px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .student-nav .nav-link:hover {
+            color: var(--sc-primary);
+            background: var(--sc-sidebar-hover);
+        }
+
+        .student-nav .nav-link.active {
+            color: var(--sc-primary);
+            background: var(--sc-sidebar-active);
+        }
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .student-sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid var(--sc-border);
+            padding-top: 14px;
+        }
+
+        .logout-link:hover {
+            color: #dc3545 !important;
+            background: rgba(220, 53, 69, 0.08) !important;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .student-main {
+            margin-left: 260px;
+            min-height: 100vh;
+            padding: 32px 38px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 28px;
+        }
+
+        .dashboard-header .eyebrow {
+            color: var(--sc-primary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .dashboard-header h1 {
+            color: var(--sc-text);
+            font-size: 30px;
+            font-weight: 750;
+            margin-bottom: 7px;
+        }
+
+        .dashboard-header p {
+            color: var(--sc-muted);
+            margin-bottom: 0;
+        }
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .sc-card {
+            background: var(--sc-card);
+            border: 1px solid var(--sc-border);
+            border-radius: 16px;
+            color: var(--sc-text);
+            transition:
+                background-color 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease;
+        }
+
+        .stat-card {
+            padding: 22px;
+            height: 100%;
+        }
+
+        .stat-title {
+            color: var(--sc-muted);
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .stat-value {
+            color: var(--sc-text);
+            font-size: 28px;
+            font-weight: 750;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sc-sidebar-active);
+            color: var(--sc-primary);
+            font-size: 21px;
+        }
+
+        /* =====================================================
+           ATTENDANCE
+        ===================================================== */
+
+        .attendance-card {
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .section-title {
+            color: var(--sc-text);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .section-subtitle {
+            color: var(--sc-muted);
+            font-size: 13px;
+            margin-bottom: 0;
+        }
+
+        .attendance-table {
+            margin-top: 20px;
+        }
+
+        .attendance-table th {
+            color: var(--sc-muted);
+            font-size: 12px;
+            font-weight: 700;
+            border-color: var(--sc-border);
+            padding: 13px;
+        }
+
+        .attendance-table td {
+            color: var(--sc-text);
+            border-color: var(--sc-border);
+            padding: 14px 13px;
+            vertical-align: middle;
+        }
+
+        .attendance-percentage {
+            font-weight: 700;
+            color: var(--sc-primary);
+        }
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .sc-btn-primary {
+            background: var(--sc-primary);
+            border: 0;
+            color: white;
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .sc-btn-primary:hover {
+            background: #4338ca;
+            color: white;
+        }
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .sc-theme-toggle {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 11px;
+            border: 1px solid var(--sc-border);
+            background: var(--sc-card);
+            color: var(--sc-text);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .sc-theme-toggle:hover {
+            background: var(--sc-primary);
+            border-color: var(--sc-primary);
+            color: white;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .student-sidebar {
+                width: 220px;
+            }
+
+            .student-main {
+                margin-left: 220px;
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .student-sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            .student-main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .student-sidebar-bottom {
+                margin-top: 15px;
+            }
+        }
+
+    </style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='icon.svg') }}">
+<link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}"><meta name="theme-color" content="#4f46e5">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     STUDENT SIDEBAR
+========================================================= -->
+
+<aside class="student-sidebar">
+
+    <!-- BRAND -->
+
+    <div class="student-brand">
+
+        <a href="{{ url_for('student_dashboard') }}">
+
+            <span class="student-brand-icon">
+                <i class="bi bi-mortarboard-fill"></i>
+            </span>
+
+            <span class="student-brand-text">
+                <strong>Student Management</strong>
+                <small>SmartCampus System</small>
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- USER -->
+
+    <div class="student-user">
+
+        <div class="student-avatar">
+            <i class="bi bi-person-fill"></i>
+        </div>
+
+        <div class="student-user-info">
+
+            <strong>
+                {{ session.get('name', 'Student') }}
+            </strong>
+
+            <span>
+                Student
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- MENU LABEL -->
+
+    <div class="menu-label">
+        MENU
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="student-nav">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="{{ url_for('student_dashboard') }}"
+            class="nav-link {% if request.endpoint == 'student_dashboard' %}active{% endif %}"
+        >
+
+            <i class="bi bi-grid-1x2-fill"></i>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- PROFILE -->
+
+        <a
+            href="{{ url_for('student_profile') }}"
+            class="nav-link {% if request.endpoint == 'student_profile' %}active{% endif %}"
+        >
+
+            <i class="bi bi-person"></i>
+
+            <span>
+                Profile
+            </span>
+
+        </a>
+
+
+        <!-- ATTENDANCE -->
+
+        <a
+            href="{{ url_for('student_attendance') }}"
+            class="nav-link {% if request.endpoint == 'student_attendance' %}active{% endif %}"
+        >
+
+            <i class="bi bi-calendar-check"></i>
+
+            <span>
+                Attendance
+            </span>
+
+        </a>
+
+
+        <!-- TIMETABLE
+             IMPORTANT:
+             Correct endpoint is student_timetable
+        -->
+
+        <a
+            href="{{ url_for('student_timetable') }}"
+            class="nav-link {% if request.endpoint == 'student_timetable' %}active{% endif %}"
+        >
+
+            <i class="bi bi-calendar3"></i>
+
+            <span>
+                Timetable
+            </span>
+
+        </a>
+
+
+        <!-- ASSIGNMENTS -->
+
+        <a
+            href="{{ url_for('student_assignments') }}"
+            class="nav-link {% if request.endpoint == 'student_assignments' %}active{% endif %}"
+        >
+
+            <i class="bi bi-journal-text"></i>
+
+            <span>
+                Assignments
+            </span>
+
+        </a>
+
+
+        <!-- ANNOUNCEMENTS -->
+
+        <a
+            href="{{ url_for('student_announcements') }}"
+            class="nav-link {% if request.endpoint == 'student_announcements' %}active{% endif %}"
+        >
+
+            <i class="bi bi-megaphone"></i>
+
+            <span>
+                Announcements
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="student-sidebar-bottom">
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-link logout-link"
+        >
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="student-main">
+
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div class="eyebrow">
+            STUDENT PORTAL
+        </div>
+
+        <h1>
+            Welcome, {{ session.get('name', 'Student') }}
+        </h1>
+
+        <p>
+            Manage your academic information, attendance,
+            timetable and assignments from one place.
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <div class="row g-4">
+
+
+        <!-- TOTAL CLASSES -->
+
+        <div class="col-md-4">
+
+            <div class="sc-card stat-card">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Total Classes
+                        </div>
+
+                        <div class="stat-value">
+                            {{ total_classes }}
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-calendar-event"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRESENT -->
+
+        <div class="col-md-4">
+
+            <div class="sc-card stat-card">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Present
+                        </div>
+
+                        <div class="stat-value">
+                            {{ total_present }}
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-check-circle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ABSENT -->
+
+        <div class="col-md-4">
+
+            <div class="sc-card stat-card">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="stat-title">
+                            Absent
+                        </div>
+
+                        <div class="stat-value">
+                            {{ total_absent }}
+                        </div>
+
+                    </div>
+
+                    <div class="stat-icon">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ATTENDANCE SUMMARY
+    ====================================================== -->
+
+    <div class="sc-card attendance-card">
+
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h5 class="section-title">
+                    Attendance Summary
+                </h5>
+
+                <p class="section-subtitle">
+                    Your attendance percentage by subject.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('student_attendance') }}"
+                class="sc-btn-primary"
+            >
+
+                <i class="bi bi-calendar-check me-1"></i>
+
+                View Attendance
+
+            </a>
+
+        </div>
+
+
+
+        <div class="table-responsive attendance-table">
+
+            <table class="table align-middle mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Subject
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Present
+                        </th>
+
+                        <th>
+                            Absent
+                        </th>
+
+                        <th>
+                            Percentage
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for item in attendance %}
+
+                    <tr>
+
+                        <td class="fw-semibold">
+
+                            {{ item.subject }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.total }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.present }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.absent }}
+
+                        </td>
+
+
+                        <td class="attendance-percentage">
+
+                            {{ item.percentage }}%
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="text-center py-4"
+                            style="color: var(--sc-muted);"
+                        >
+
+                            No attendance records available.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         OVERALL ATTENDANCE
+    ====================================================== -->
+
+    <div class="sc-card attendance-card">
+
+
+        <div class="row align-items-center">
+
+
+            <div class="col-md-8">
+
+                <h5 class="section-title">
+                    Overall Attendance
+                </h5>
+
+                <p class="section-subtitle">
+                    Combined attendance percentage across all subjects.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+                <div
+                    style="
+                        font-size:34px;
+                        font-weight:800;
+                        color:var(--sc-primary);
+                    "
+                >
+
+                    {{ overall_percentage }}%
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     BOOTSTRAP
+========================================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+
+<!-- =========================================================
+     DARK / LIGHT MODE
+========================================================= -->
+
+<script>
+
+(function () {
+
+    const STORAGE_KEY = "smartcampus-theme";
+
+
+    function applyTheme(theme) {
+
+        const isDark = theme === "dark";
+
+        document.body.classList.toggle(
+            "sc-dark-mode",
+            isDark
+        );
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            isDark ? "dark" : "light"
+        );
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            isDark ? "dark" : "light"
+        );
+
+        updateThemeButton();
+
+    }
+
+
+    function updateThemeButton() {
+
+        const button =
+            document.querySelector(".sc-theme-toggle");
+
+        if (!button) {
+            return;
+        }
+
+        const isDark =
+            document.body.classList.contains(
+                "sc-dark-mode"
+            );
+
+        button.innerHTML = isDark
+            ? '<i class="bi bi-sun-fill"></i>'
+            : '<i class="bi bi-moon-stars-fill"></i>';
+
+        button.title =
+            isDark
+                ? "Switch to Light Mode"
+                : "Switch to Dark Mode";
+
+    }
+
+
+    function createThemeButton() {
+
+        if (
+            document.querySelector(
+                ".sc-theme-toggle"
+            )
+        ) {
+            return;
+        }
+
+
+        const button =
+            document.createElement("button");
+
+
+        button.type = "button";
+
+        button.className =
+            "sc-theme-toggle";
+
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                const isDark =
+                    document.body.classList.contains(
+                        "sc-dark-mode"
+                    );
+
+                applyTheme(
+                    isDark
+                        ? "light"
+                        : "dark"
+                );
+
+            }
+        );
+
+
+        /*
+         * Put the button in the top-right.
+         */
+
+        button.style.position = "fixed";
+        button.style.top = "18px";
+        button.style.right = "22px";
+        button.style.zIndex = "9999";
+
+
+        document.body.appendChild(
+            button
+        );
+
+
+        updateThemeButton();
+
+    }
+
+
+    function initializeTheme() {
+
+        const savedTheme =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (savedTheme === "dark") {
+
+            applyTheme("dark");
+
+        } else {
+
+            applyTheme("light");
+
+        }
+
+
+        createThemeButton();
+
+    }
+
+
+    if (
+        document.readyState === "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeTheme
+        );
+
+    } else {
+
+        initializeTheme();
+
+    }
+
+})();
+
+</script>
+
+
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+</body>
+
+</html>

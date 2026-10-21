@@ -1,0 +1,10 @@
+{
+  "name": "SmartCampus Student Management System",
+  "short_name": "SmartCampus",
+  "description": "Attendance, assignments, timetable and announcements in one place.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f8fc",
+  "theme_color": "#4f46e5",
+  "icons": [{"src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}
